@@ -11,4 +11,7 @@ export class HomePage {
 
   }
 
+  onClickTemp() {
+    alert("create your own button navigate to your feature of the app in home page")
+  }  
 }
