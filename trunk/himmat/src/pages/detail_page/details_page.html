@@ -14,14 +14,14 @@
         <ion-item>
             <ion-label>Patient # (QR)</ion-label>
             <ion-input type="text"></ion-input>  
-            <button ion-button item-end>
-                <ion-icon name="camera"></ion-icon>
+            <button ion-button item-end (click)="scanQRCode()">
+                <ion-icon name="qr-scanner"></ion-icon>
             </button>
         </ion-item>
         
         <ion-item>
             <ion-label>Name</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" [value]="patient.name"></ion-input>
             <button ion-button item-end>
                 <ion-icon ios="ios-create" md="md-create"></ion-icon>
             </button>
@@ -32,8 +32,8 @@
 
         <ion-item >
             <ion-label item-start >Gender</ion-label>    
-            <ion-radio checked="true" value="Female">Female</ion-radio>
-            <ion-radio value="Male" item-end>Male</ion-radio>            
+            <ion-radio [checked]="maleGender" value="Female">Female</ion-radio>
+            <ion-radio [checked]="femaleGender" value="Male" item-end>Male</ion-radio>            
         </ion-item>
 
         <ion-item>
@@ -47,12 +47,12 @@
                            <ion-icon name="camera"></ion-icon>
                     </button>
             </ion-buttons>
-            <ion-input type="number"></ion-input>
+            <ion-input type="number" [value] = "patient.age"></ion-input>
         </ion-item>
 
         <ion-item>
             <ion-label>Heathcare ID</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" [value]="patient.heathcareid"></ion-input>
         </ion-item>
 
         <ion-item-group radio-group>
@@ -105,6 +105,9 @@
             </button>
             <button ion-button item-start>
                 <ion-icon name="create"></ion-icon>
+            </button>
+            <button ion-button item-start (click)="goQRCode()">
+                <ion-icon name="skip-forward"></ion-icon>
             </button>
         </ion-item>
     </ion-list>

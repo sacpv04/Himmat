@@ -9,28 +9,35 @@ import { HomePage } from '../pages/home/home';
 import { DetailsPage } from '../pages/detail_page/details_page';
 import { HttpModule } from '@angular/http';
 import { Patient } from '../pages/services/PatientApi';
+import { QRCode } from '../pages/qrcode/qrcode';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    DetailsPage
+    DetailsPage,
+    QRCode
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    NgxQRCodeModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    DetailsPage
+    DetailsPage,
+    QRCode
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Patient,
+    BarcodeScanner,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
