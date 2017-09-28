@@ -9,24 +9,40 @@
 <ion-content padding>
     <ion-icon [name]="'logo-' + item.icon" [ngStyle]="{'color': item.color}"></ion-icon>
     {{ item.description }}
-    <ion-list inset>
+    <ion-list>
 
         <ion-item>
             <ion-label>Patient # (QR)</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text"></ion-input>  
+            <button ion-button item-end>
+                    <ion-icon name="camera"></ion-icon>
+            </button>    
         </ion-item>
 
+        <ion-item-options>
+                <button ion-button icon-only (click)="editNote(note)" light>
+                    <ion-icon name="paper"></ion-icon>
+                </button>
+                <button ion-button icon-only (click)="deleteNote(note)" danger>
+                    <ion-icon name="trash"></ion-icon>
+                </button>
+            </ion-item-options>
         <ion-item>
             <ion-label>Name</ion-label>
             <ion-input type="text"></ion-input>
+            <button ion-button item-end>
+                    <ion-icon ios="ios-create" md="md-create"></ion-icon>
+            </button>
+            <button ion-button item-end>
+                    <ion-icon name="mic"></ion-icon>
+            </button>
         </ion-item>
 
-        <ion-item radio-group>
-            <ion-label>Gender</ion-label>
+        <ion-item >
+            <ion-label wrap>Gender</ion-label>    
             <ion-radio checked="true" value="Female"></ion-radio>
-            <ion-label>Female</ion-label>
-            <ion-radio value="Male"></ion-radio>
-            <ion-label>Male</ion-label>
+            <ion-radio value="Male" item-end></ion-radio>
+            
         </ion-item>
 
         <ion-item>
