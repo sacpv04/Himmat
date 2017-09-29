@@ -12,6 +12,7 @@ import { Patient } from '../pages/services/PatientApi';
 import { QRCode } from '../pages/qrcode/qrcode';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { NgxBarcodeModule } from 'ngx-barcode';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     BrowserModule,
     HttpModule,
     NgxQRCodeModule,
+    NgxBarcodeModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],

@@ -13,9 +13,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     maleGender:string;
     femaleGender:string;
     constructor(public nav: NavController, params: NavParams, private barcodeScanner: BarcodeScanner) {
-      this.item = params.data.item;
-      this.maleGender = "";
-      this.femaleGender = "";
+      this.item = params.data.item;      
       this.patient = new Patient();  
     }
     goQRCode() {
@@ -23,28 +21,28 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     }
     scanQRCode() {
       var patients = [{
-                      id: "3dd50aaf-6b03-4497-b074-d81703f07ee8",
+                      id: "dd50aaf",
                       name: "Cager Classic",
                       gender: "Male",
                       age: "65",
                       heathcareid: "6b03-4497-b074"
                       },
                       {
-                      id: "98c6857e-b0d1-4295-b89e-2d95a45437f2",
+                      id: "98c6857e",
                       name: "Holiday Hoops Challenge",
                       gender: "Female",
                       age: "67",
                       heathcareid: "-b0d1-4295-b89e"
                       },
                       {
-                      id: "46ebd526-8839-476a-9ba0-8a9b2c07f3c3",
+                      id: "dd50aaf",
                       name: "Summer Showdown",
                       gender: "Male",
                       age: "68",
                       heathcareid: "8839-476a-9ba0"
                       },
                       {
-                      id: "89e13aa2-ba6d-4f55-9cc2-61eba6172c63",
+                      id: "89e13aa2",
                       name: "March Madness Tournament",
                       gender: "Female",
                       age: "67",
@@ -56,8 +54,10 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
           var gender = patients[i].gender;
           if (gender === "Male") {
             this.maleGender = "checked";
+            this.femaleGender = ""
           } else {
             this.femaleGender = "checked";
+            this.maleGender = "";
           }
           if (id === barcodeData.text) {
             this.patient = patients[i];

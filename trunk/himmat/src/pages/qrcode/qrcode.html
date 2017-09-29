@@ -14,10 +14,8 @@
 </ion-header>
 
 <ion-content>
-    <ion-list class="qrlist">
-        <ngx-qrcode [qrc-value]="qrcode1"></ngx-qrcode> 
-        <ngx-qrcode [qrc-value]="qrcode2"></ngx-qrcode> 
-        <ngx-qrcode [qrc-value]="qrcode3"></ngx-qrcode>
-        <ngx-qrcode [qrc-value]="qrcode4"></ngx-qrcode> 
-    </ion-list>       
+    <ion-list class="qrlist" *ngFor="let qrcode of qrcodes">
+        <!-- <ngx-qrcode [qrc-value]="qrcode"></ngx-qrcode> -->
+        <ngx-barcode [bc-value]="qrcode" [bc-display-value]="false"></ngx-barcode>         
+    </ion-list> 
 </ion-content>
