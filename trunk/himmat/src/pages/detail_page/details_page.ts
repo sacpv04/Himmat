@@ -61,8 +61,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
           }
           if (id === barcodeData.text) {
             this.patient = patients[i];
-          }
-          break;          
+            break; 
+          }                   
         }          
        }, (err) => {
            // An error occurred
