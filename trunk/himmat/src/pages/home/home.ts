@@ -29,6 +29,3 @@ export class HomePage {
       this.nav.push(DetailsPage, { item: item });
   }
 }
-class User {
-  family:string;
-}

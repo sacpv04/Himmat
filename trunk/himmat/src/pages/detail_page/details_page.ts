@@ -35,7 +35,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
                       heathcareid: "-b0d1-4295-b89e"
                       },
                       {
-                      id: "dd50aaf",
+                      id: "hh342jjss",
                       name: "Summer Showdown",
                       gender: "Male",
                       age: "68",

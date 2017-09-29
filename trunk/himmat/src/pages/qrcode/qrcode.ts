@@ -8,6 +8,6 @@ import { NavController } from 'ionic-angular';
 export class QRCode {  
   private qrcodes = [];
   constructor(public nav: NavController) {       
-    this.qrcodes = ["dd50aaf","98c6857e", "dd50aaf", "89e13aa2"];
+    this.qrcodes = ["dd50aaf","98c6857e", "hh342jjss", "89e13aa2"];
   }
 }
