@@ -37,9 +37,19 @@ $colors: (
   primary:    #488aff,
   secondary:  #32db64,
   danger:     #f53d3d,
+  oxygen:      #00bea5,
   light:      #f4f4f4,
-  dark:       #222
+  grey:     grey,
+  dark:       #222,
+  red:      #ff0000,
+  light_blue:    #58B0CE,
+  orange: #D28E13,
+  yellow: #CFE902
 );
+
+.no-outline{
+  outline: none;
+}
 
 
 // App iOS Variables
@@ -71,7 +81,6 @@ $colors: (
 // default are overridden.
 
 @import "ionic.theme.default";
-
 
 // Ionicons
 // --------------------------------------------------

@@ -8,13 +8,13 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     templateUrl: 'details_page.html',
   })
   export class DetailsPage {
-    item;
     patient:any;
     maleGender:string;
     femaleGender:string;
     constructor(public nav: NavController, params: NavParams, private barcodeScanner: BarcodeScanner) {
-      this.item = params.data.item;      
-      this.patient = new Patient();  
+      var item = params.data.item;
+      this.patient = new Patient();
+      this.patient.name = item.name;
     }
     goQRCode() {
       this.nav.push(QRCode);

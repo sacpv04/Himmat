@@ -1,53 +1,51 @@
-<ion-header>
-    <ion-navbar>
+<ion-header align-title="center">
+    <ion-navbar color="oxygen">
         <ion-title>
-            {{ item.title }}
+            {{ patient.name }}
         </ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-    <ion-icon [name]="'logo-' + item.icon" [ngStyle]="{'color': item.color}"></ion-icon>
-    {{ item.description }}
+    <ion-icon name="person"></ion-icon>
+    {{ patient.age }}
     <ion-list>
-
         <ion-item>
             <ion-label>Patient # (QR)</ion-label>
-            <ion-input type="text"></ion-input>  
+            <ion-input type="text"></ion-input>
             <button ion-button item-end (click)="scanQRCode()">
                 <ion-icon name="qr-scanner"></ion-icon>
             </button>
         </ion-item>
-        
+
         <ion-item>
             <ion-label>Name</ion-label>
             <ion-input type="text" [value]="patient.name"></ion-input>
-            <button ion-button item-end>
-                <ion-icon ios="ios-create" md="md-create"></ion-icon>
+            <button ion-button item-end color="grey" clear icon-only>
+                <ion-icon name="create"></ion-icon>
             </button>
-            <button ion-button item-end>
+            <button ion-button item-end color="grey" clear icon-only>
                 <ion-icon name="mic"></ion-icon>
             </button>
         </ion-item>
 
-        <ion-item >
-            <ion-label item-start >Gender</ion-label>    
-            <ion-radio [checked]="maleGender" value="Female">Female</ion-radio>
-            <ion-radio [checked]="femaleGender" value="Male" item-end>Male</ion-radio>            
+        <ion-item radio-group>
+            <ion-label item-left>Gender</ion-label>
+            <ion-radio [checked]="maleGender" value="Female" item-right>Female</ion-radio>
+            <ion-radio [checked]="femaleGender" value="Male" item-right>Male</ion-radio>
         </ion-item>
 
         <ion-item>
             <ion-label>Age</ion-label>
             <ion-buttons end>
-                <button ion-button>
-                        <ion-icon name="mic"></ion-icon>
-                        </button>
-
-                <button ion-button>
-                           <ion-icon name="camera"></ion-icon>
-                    </button>
+                <button ion-button item-end color="grey" clear icon-only>
+                    <ion-icon name="create"></ion-icon>
+                </button>
+                <button ion-button item-end color="grey" clear icon-only>
+                    <ion-icon name="mic"></ion-icon>
+                </button>
             </ion-buttons>
-            <ion-input type="number" [value] = "patient.age"></ion-input>
+            <ion-input type="number" [value]="patient.age"></ion-input>
         </ion-item>
 
         <ion-item>
@@ -56,33 +54,33 @@
         </ion-item>
 
         <ion-item-group radio-group>
-            <ion-item-divider color="light">Emergency Severity Index</ion-item-divider>
+            <ion-item-divider>Emergency Severity Index</ion-item-divider>
             <ion-item>
-                <ion-radio item-start value="1"></ion-radio>                 
-                <ion-label>ESI 1</ion-label>
+                <ion-radio color="primary" item-start value="1"></ion-radio>
+                <ion-label color="primary">ESI 1 (Resuscitation)</ion-label>
             </ion-item>
             <ion-item>
-                <ion-label>ES2 2</ion-label>
-                <ion-radio item-start value="2"></ion-radio>
+                <ion-label color="red">ES2 2 (Emergent)</ion-label>
+                <ion-radio color="red" item-start value="2"></ion-radio>
             </ion-item>
             <ion-item>
-                <ion-radio item-start value="3"></ion-radio>
-                <ion-label>ESI 3</ion-label>
+                <ion-radio color ="orange"item-start value="3"></ion-radio>
+                <ion-label color ="orange">ESI 3 (Urgent)</ion-label>
             </ion-item>
             <ion-item>
-                <ion-radio item-start value="4"></ion-radio>
-                <ion-label>ESI 4</ion-label>
+                <ion-radio color="yellow" item-start value="4"></ion-radio>
+                <ion-label color ="yellow">ESI 4 (Less Urgent)</ion-label>
             </ion-item>
 
             <ion-item>
-                  <ion-radio item-start value="5"></ion-radio>
-                  <ion-label>ESI 5</ion-label>
+                <ion-radio color="oxygen" item-start value="5"></ion-radio>
+                <ion-label color="oxygen">ESI 5 (Nonurgent)</ion-label>
             </ion-item>
 
         </ion-item-group>
 
         <ion-item-divider color="light">Retrieve Historical Data (OHC)</ion-item-divider>
-                    <ion-label>Patient # (QR)</ion-label>
+        <ion-label>Patient # (QR)</ion-label>
         <ion-item>
             <ion-label>Alleric</ion-label>
         </ion-item>
