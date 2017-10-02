@@ -13,19 +13,25 @@ import { QRCode } from '../pages/qrcode/qrcode';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { NgxBarcodeModule } from 'ngx-barcode';
+import { HandWrite } from '../pages/handwrite/handwrite';
+import { SignaturePadModule } from 'angular2-signaturepad';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     DetailsPage,
-    QRCode
+    QRCode,
+    HandWrite
   ],
   imports: [
     BrowserModule,
     HttpModule,
     NgxQRCodeModule,
     NgxBarcodeModule,
+    SignaturePadModule,
+    IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -33,7 +39,8 @@ import { NgxBarcodeModule } from 'ngx-barcode';
     MyApp,
     HomePage,
     DetailsPage,
-    QRCode
+    QRCode,
+    HandWrite
   ],
   providers: [
     StatusBar,

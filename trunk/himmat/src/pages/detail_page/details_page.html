@@ -114,11 +114,17 @@
         </button>
 
         <button ion-button item-start>
-                <ion-icon name="create"></ion-icon>
+                <ion-icon name="create" (click)="goHandWrite()"></ion-icon>
             </button>
 
         <button ion-button item-start (click)="goQRCode()">
             <ion-icon name="skip-forward"></ion-icon>
         </button>
+    </ion-item>
+    <ion-item>
+            <ion-label>Mental illness
+                <img [src] ="signature">
+            </ion-label>
+
     </ion-item>
 </ion-content>
