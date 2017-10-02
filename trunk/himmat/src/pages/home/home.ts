@@ -1,74 +1,44 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DetailsPage } from '../detail_page/details_page';
+import { Patient } from '../services/PatientApi';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  items = [];
-  
-    constructor(public nav: NavController) {
-      this.items = [
-        {
-          'title': 'Rose',
-          'icon': 'tux',
-          'description': 'Some discription for this user',
-          'color': '#E63135'
-        },
-        {
-          'title': 'Bob',
-          'icon': 'tux',
-          'description': 'Some discription for this user',
-          'color': '#0CA9EA'
-        },
-        {
-          'title': 'Anna',
-          'icon': 'tux',
-          'description': 'Some discription for this user',
-          'color': '#F46529'
-        },
-        {
-          'title': 'Shara',
-          'icon': 'tux',
-          'description': 'Some discription for this user',
-          'color': '#FFD439'
-        },
-        {
-          'title': 'Jim',
-          'icon': 'tux',
-          'description': 'Some discription for this user',
-          'color': '#CE6296'
-        },
-        {
-          'title': 'Emma',
-          'icon': 'tux',
-          'description': 'Some discription for this user',
-          'color': '#78BD43'
-        },
-        {
-          'title': 'Tony',
-          'icon': 'tux',
-          'description': 'Some discription for this user',
-          'color': '#3575AC'
-        },
-        {
-          'title': 'John',
-          'icon': 'tux',
-          'description': 'Some discription for this user',
-          'color': '#412159'
-        },
-        {
-          'title': 'Eva',
-          'icon': 'tux',
-          'description': 'Some discription for this user',
-          'color': '#000'
-        },
-      ]
+  items: any = [];
+  private users = [];
+  private names = [];
+  constructor(public nav: NavController, private patientAPI: Patient) {
+    this.patientAPI.getPartients().then(res => {
+      this.items = res;
+      this.items.entry.forEach(element => {
+        if (element.resource.name) {
+          this.names.push(element.resource.name);
+        }
+      });
+      this.names.forEach(element => {
+        this.users.push(element[0].family);
+      });
+    });
+  }
+
+  openNavDetailsPage(user) {
+    var patient = {   
+      'name': '',
+      "icon": "person"
     }
-  
-    openNavDetailsPage(item) {
-      this.nav.push(DetailsPage, { item: item });
+    patient.name = user;
+    this.nav.push(DetailsPage, { item: patient });
+  }
+
+  newDetailsPage() {
+    var patient = {
+      'name': 'New User',
+      'icon': 'person'
+    }
+    this.nav.push(DetailsPage, { item: patient });
   }
 }

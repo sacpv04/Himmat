@@ -1,0 +1,21 @@
+
+<ion-header>
+  <ion-navbar>
+    <button ion-button round>
+        <ion-icon name="person-add" item-start></ion-icon>
+    </button>
+    <ion-title>Pre-Triage</ion-title>
+    <ion-buttons end>
+    <button ion-button round>
+        <ion-icon ios="ios-more" md="md-more"></ion-icon>
+    </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list class="qrlist" *ngFor="let qrcode of qrcodes">
+        <ngx-qrcode [qrc-value]="qrcode"></ngx-qrcode>
+        <!-- <ngx-barcode [bc-value]="qrcode" [bc-display-value]="false"></ngx-barcode>          -->
+    </ion-list> 
+</ion-content>
