@@ -24,8 +24,7 @@ import { Patient } from '../services/PatientApi';
       this.nav.push(QRCode);
     }
 
-    scanQRCode() {
-      
+    scanQRCode() {      
       this.patientAPI.getPartients().then(res => {
         this.items = res;
         this.items.entry.forEach(element => {                  
@@ -43,12 +42,9 @@ import { Patient } from '../services/PatientApi';
           this.patient.surgery_history = "";
           this.patient.mental_illness = "";
           this.patient.quick_note = "";
-          console.log(this.patient)
           this.patients.push(this.patient);
         });
       });
-
-
       this.barcodeScanner.scan().then((barcodeData) => {
         for (var i = 0; i < this.patients.length; i++) {
           var id = this.patients[i].id;
@@ -68,7 +64,6 @@ import { Patient } from '../services/PatientApi';
        }, (err) => {
            // An error occurred
        });
-      
     }
 }
 

@@ -83,19 +83,19 @@
         <ion-label>Patient # (QR)</ion-label>
         <ion-item>
             <ion-label>Alleric</ion-label>
-            <ion-input type="text" [value]="patient.alleric"></ion-input>
+            <ion-input type="text" [(ngModel)]="patient.alleric"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>Blood type</ion-label>
-            <ion-input type="text" [value]="patient.bloodtype"></ion-input>
+            <ion-input type="text"[(ngModel)]="patient.bloodtype"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>Surgery history</ion-label>
-            <ion-input type="text" [value]="patient.surgery_history"></ion-input>
+            <ion-input type="text" [(ngModel)]="patient.surgery_history"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>Mental illness</ion-label>
-            <ion-input type="text" [value]="patient.mental_illness"></ion-input>
+            <ion-input type="text" [(ngModel)]="patient.mental_illness"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label item-start>Quick note:</ion-label>
