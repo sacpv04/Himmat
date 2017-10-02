@@ -3,11 +3,13 @@ import { NavParams } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import { QRCode } from '../qrcode/qrcode';
 import { HandWrite } from '../handwrite/handwrite';
+import { PhotoRecording } from '../photo_recording/photo_recording';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 @Component({
+    selector: 'detail-page',
     templateUrl: 'details_page.html',
   })
   export class DetailsPage {
@@ -95,6 +97,10 @@ import { Storage } from '@ionic/storage';
            // An error occurred
        });
       
+    }
+
+    openPhotoRecording(){
+      this.nav.push(PhotoRecording);
     }
 
 

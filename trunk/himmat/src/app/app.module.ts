@@ -14,8 +14,12 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { HandWrite } from '../pages/handwrite/handwrite';
+import { PhotoRecording } from '../pages/photo_recording/photo_recording';
+import { EditPhoto } from '../pages/edit_photo/edit_photo';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { IonicStorageModule } from '@ionic/storage';
+import { CameraPreview } from '@ionic-native/camera-preview';
+import { Diagnostic } from '@ionic-native/diagnostic';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,9 @@ import { IonicStorageModule } from '@ionic/storage';
     HomePage,
     DetailsPage,
     QRCode,
-    HandWrite
+    HandWrite,
+    PhotoRecording,
+    EditPhoto
   ],
   imports: [
     BrowserModule,
@@ -40,13 +46,17 @@ import { IonicStorageModule } from '@ionic/storage';
     HomePage,
     DetailsPage,
     QRCode,
-    HandWrite
+    HandWrite,
+    PhotoRecording,
+    EditPhoto
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Patient,
     BarcodeScanner,
+    Diagnostic,
+    CameraPreview,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
