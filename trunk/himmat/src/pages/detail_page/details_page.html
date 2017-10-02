@@ -31,8 +31,8 @@
 
         <ion-item radio-group>
             <ion-label item-left>Gender</ion-label>
-            <ion-radio [checked]="maleGender" value="Female" item-right>Female</ion-radio>
-            <ion-radio [checked]="femaleGender" value="Male" item-right>Male</ion-radio>
+            <ion-radio [checked]="maleGender" value="male" item-right>Female</ion-radio>
+            <ion-radio [checked]="femaleGender" value="female" item-right>Male</ion-radio>
         </ion-item>
 
         <ion-item>
@@ -45,7 +45,7 @@
                     <ion-icon name="mic"></ion-icon>
                 </button>
             </ion-buttons>
-            <ion-input type="number" [(ngModel)] = "patient.brithday"></ion-input>
+            <ion-input type="text" [(ngModel)] = "patient.brithday"></ion-input>
         </ion-item>
 
         <ion-item>
