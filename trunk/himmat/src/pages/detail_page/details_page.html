@@ -29,7 +29,7 @@
             </button>
         </ion-item>
 
-        <ion-item radio-group>
+        <ion-item radio-group [(ngModel)]="patient.gender">
             <ion-label item-left>Gender</ion-label>
             <ion-radio [checked]="maleGender" value="male" item-right>Female</ion-radio>
             <ion-radio [checked]="femaleGender" value="female" item-right>Male</ion-radio>
@@ -105,7 +105,7 @@
             <button ion-button item-start>
                 <ion-icon name="camera"></ion-icon>
             </button>
-            <button ion-button item-start>
+            <button ion-button item-start (click)="addPatient()">
                 <ion-icon name="create"></ion-icon>
             </button>
             <button ion-button item-start (click)="goQRCode()">

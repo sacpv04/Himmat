@@ -23,7 +23,6 @@ import { AlertController } from 'ionic-angular';
         this.items = res;
         this.items.entry.forEach(element => {
           this.patients.push(element.resource);
-          console.log( this.patients);
         });            
       });                     
     }
@@ -32,13 +31,24 @@ import { AlertController } from 'ionic-angular';
       this.nav.push(QRCode);
     }
 
+    addPatient() {           
+      this.patient.id = this.patient.id;
+      this.patient.name = this.patient.name;     
+      this.patient.gender = this.patient.gender;
+      this.patient.brithday = this.patient.brithday;
+      this.patient.severity = this.patient.severity;
+      this.patient.alleric = this.patient.alleric;
+      this.patient.bloodtype = this.patient.bloodtype;
+      this.patient.surgery_history = this.patient.surgery_history;
+      this.patient.mental_illness = this.patient.mental_illness;
+    }
+
     scanQRCode() {     
       this.barcodeScanner.scan().then((barcodeData) => {                
         for (var i = 0; i < this.patients.length; i++) {
           var id = this.patients[i].id;             
           if (id === barcodeData.text) {
-            this.patient = this.patients[i];            
-            // this.patient.id = this.patients[i].id;
+            this.patient = this.patients[i];
             this.patient.name = this.patients[i].name[0].family;
             this.patient.brithday = this.patients[i].birthDate;
             var gender = this.patients[i].gender;
