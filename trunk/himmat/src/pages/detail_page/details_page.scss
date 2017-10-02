@@ -46,6 +46,11 @@
   }
 
   ion-item-divider{
-    border-top: 2px solid #528D80 !important; 
-    border-bottom:  none;  
+    margin-top: 5px;
+    border-top: 2px solid #528D80 !important;
+    border-bottom:  none;
+ }
+
+ ion-item-divider ion-lable {
+    font-style:italic;
  }
