@@ -28,18 +28,18 @@
 
     <ion-row radio-group [(ngModel)]="sexe">
        
-        <ion-col class="red-background"><ion-item><ion-label >Gender</ion-label></ion-item>
+        <ion-col class="gender-lable" col-3><ion-item><ion-label class="no-marin" >Gender</ion-label></ion-item>
         </ion-col>
-        <ion-col>
+        <ion-col class="gender" col-4>
             <ion-item class="no-boder-icon">
                 <ion-radio class="radio-marin" value="male" item-left></ion-radio>
-            <ion-label>Male</ion-label>
+                <ion-label class="no-marin">Male</ion-label>
             </ion-item>
         </ion-col>
-        <ion-col>
+        <ion-col class="gender" col-5>
             <ion-item>
                 <ion-radio class="radio-marin" value="female" item-left></ion-radio>
-                <ion-label>Female</ion-label>
+                <ion-label class="no-marin">Female</ion-label>
             </ion-item>
         </ion-col>
     </ion-row>

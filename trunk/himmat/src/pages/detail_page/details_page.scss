@@ -1,5 +1,5 @@
 .no-boder-icon {
-    border: none;
+    border: none !important;
 }
 .test-back{
    background-color: red
@@ -27,3 +27,25 @@
   .red-background{
     background-color: red;
   }
+  .gender{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+
+  .gender-lable{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+
+  .no-marin {
+      margin: 0px 0px 0px 0px !important;
+  }
+
+  .gender-lable .item-inner {
+      border: none !important;
+  }
+
+  ion-item-divider{
+    border-top: 2px solid #528D80 !important; 
+    border-bottom:  none;  
+ }
