@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { NavParams } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import { QRCode } from '../qrcode/qrcode';
+import { HandWrite } from '../handwrite/handwrite';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { Events } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 @Component({
     templateUrl: 'details_page.html',
@@ -11,14 +14,37 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     patient:any;
     maleGender:string;
     femaleGender:string;
-    constructor(public nav: NavController, params: NavParams, private barcodeScanner: BarcodeScanner) {
+    signature = '';
+    public signatureImage : any;
+    constructor(
+      public nav: NavController, 
+      params: NavParams, 
+      private barcodeScanner: BarcodeScanner,
+      private events: Events,
+      public storage: Storage,
+    ) {
       var item = params.data.item;
       var sexe : string;
       this.patient = new Patient();
       this.patient.name = item.name;
+      this.events.subscribe("imageName", (imageName) => {
+        this.storage.get(imageName).then((data) => {
+          this.signature = data;
+          console.log("received event: " + this.signature);
+        });
+      })
+      this.storage.get(this.patient.name).then((data) => {
+        this.signature = data;
+        console.log("received event: " + this.signature);
+      });
     }
     goQRCode() {
       this.nav.push(QRCode);
+    }
+    goHandWrite() {
+      //console.log("ID: " + this.patient.id);
+      console.log("NAME: " + this.patient.name);
+      this.nav.push(HandWrite, {item: this.patient.name});
     }
     scanQRCode() {
       var patients = [{
@@ -70,6 +96,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
        });
       
     }
+
+
 }
 
 class Patient {
@@ -78,4 +106,5 @@ class Patient {
   gender: string;
   age: string;
   heathcareid: string;
+  imageName: String;
 }
