@@ -12,7 +12,7 @@
     <ion-list>
         <ion-item>
             <ion-label>Patient # (QR)</ion-label>
-            <ion-input type="text" [value]="patient.id"></ion-input>
+            <ion-input type="text" [(ngModel)] = "patient.id"></ion-input>
             <button ion-button item-end (click)="scanQRCode()">
                 <ion-icon name="qr-scanner"></ion-icon>
             </button>
@@ -20,7 +20,7 @@
 
         <ion-item>
             <ion-label>Name</ion-label>
-            <ion-input type="text" [value]="patient.name"></ion-input>
+            <ion-input type="text" [(ngModel)] = "patient.name"></ion-input>
             <button ion-button item-end color="grey" clear icon-only>
                 <ion-icon name="create"></ion-icon>
             </button>
@@ -45,12 +45,12 @@
                     <ion-icon name="mic"></ion-icon>
                 </button>
             </ion-buttons>
-            <ion-input type="number" [value]="patient.brithday"></ion-input>
+            <ion-input type="number" [(ngModel)] = "patient.brithday"></ion-input>
         </ion-item>
 
         <ion-item>
             <ion-label>Heathcare ID</ion-label>
-            <ion-input type="text" [value]="patient.id"></ion-input>
+            <ion-input type="text" [(ngModel)] ="patient.id"></ion-input>
         </ion-item>
 
         <ion-item-group radio-group [(ngModel)]="patient.severity">
@@ -83,16 +83,19 @@
         <ion-label>Patient # (QR)</ion-label>
         <ion-item>
             <ion-label>Alleric</ion-label>
-            <ion-input type="text" [(ngModel)]="patient.ohc.alleric"></ion-input>
+            <ion-input type="text" [value]="patient.alleric"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>Blood type</ion-label>
+            <ion-input type="text" [value]="patient.bloodtype"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>Surgery history</ion-label>
+            <ion-input type="text" [value]="patient.surgery_history"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>Mental illness</ion-label>
+            <ion-input type="text" [value]="patient.mental_illness"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label item-start>Quick note:</ion-label>

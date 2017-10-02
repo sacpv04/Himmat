@@ -15,40 +15,40 @@ import { Patient } from '../services/PatientApi';
     femaleGender:string;
     items:any = [];
     patients:any = [];
-    ohc:any;
     constructor(public nav: NavController, params: NavParams, private barcodeScanner: BarcodeScanner, private patientAPI: Patient) {
       this.item = params.data.item;      
-      this.patient = new PatientModel();
-      this.ohc = new OHC();
-      this.patientAPI.getPartients().then(res => {
-        this.items = res;
-        this.items.entry.forEach(element => {                  
-          this.patient.id = element.resource.id;
-          if (element.resource.name) {
-            this.patient.id = element.resource.name[0].family;
-          } else {
-            this.patient.id = "";
-          }          
-          this.patient.gender = element.resource.gender;
-          this.patient.brithday = element.resource.birthDate;
-          this.patient.severity = "";          
-          this.ohc.alleric = "hello"; 
-          this.ohc.bloodtype = ""; 
-          this.ohc.surgery_history = "";
-          this.ohc.mental_illness = "";
-          this.ohc.quick_note = "";
-          this.patient.ohc = this.ohc;
-          console.log(this.ohc.alleric)
-          this.patients.push(this.patient);
-        });
-      });       
+      this.patient = new PatientModel();             
     }
    
     goQRCode() {
       this.nav.push(QRCode);
     }
 
-    scanQRCode() {          
+    scanQRCode() {
+      
+      this.patientAPI.getPartients().then(res => {
+        this.items = res;
+        this.items.entry.forEach(element => {                  
+          this.patient.id = element.resource.id;
+          if (element.resource.name) {
+            this.patient.name = element.resource.name[0].family;
+          } else {
+            this.patient.name = "";
+          }          
+          this.patient.gender = element.resource.gender;
+          this.patient.brithday = element.resource.birthDate;
+          this.patient.severity = "";         
+          this.patient.alleric = ""; 
+          this.patient.bloodtype = ""; 
+          this.patient.surgery_history = "";
+          this.patient.mental_illness = "";
+          this.patient.quick_note = "";
+          console.log(this.patient)
+          this.patients.push(this.patient);
+        });
+      });
+
+
       this.barcodeScanner.scan().then((barcodeData) => {
         for (var i = 0; i < this.patients.length; i++) {
           var id = this.patients[i].id;
@@ -78,14 +78,10 @@ class PatientModel {
   gender: string;
   brithday: string;
   severity:string;
-  ohc:any;    
-}
-
-class OHC {
   alleric:string;
   bloodtype:string;
   surgery_history:string;
   mental_illness:string;
-  quick_note:string;
+  quick_note:string;    
 }
 
