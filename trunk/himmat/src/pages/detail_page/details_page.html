@@ -14,7 +14,7 @@
 <ion-content padding>
     <ion-item>
         <ion-label color="primary">Patient # (QR)</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input type="text" [(ngModel)] = "patient.id"></ion-input>
         <button ion-button item-end (click)="scanQRCode()">
             <ion-icon name="qr-scanner"></ion-icon>
         </button>
@@ -22,7 +22,7 @@
 
     <ion-item>
         <ion-label color="primary">Name</ion-label>
-        <ion-input type="text" [value]="patient.name"></ion-input>
+        <ion-input type="text" [value]="patient.name" [(ngModel)] = "patient.name"></ion-input>
         <button ion-button class="no-boder-icon" item-end color="grey" outline icon-only>
             <ion-icon name="create"></ion-icon>
         </button>
@@ -31,7 +31,7 @@
         </button>
     </ion-item>
 
-    <ion-row radio-group [(ngModel)]="sexe">
+    <ion-row radio-group [(ngModel)]="patient.gender">
         <ion-col class="gender-lable" col-3>
             <ion-item>
                 <ion-label class="no-marin" color="primary">Gender</ion-label>
@@ -39,13 +39,13 @@
         </ion-col>
         <ion-col class="gender" col-4>
             <ion-item class="no-boder-icon">
-                <ion-radio class="radio-marin" value="Male" item-left></ion-radio>
+                <ion-radio class="radio-marin" value="male" item-left></ion-radio>
                 <ion-label class="no-marin">Male</ion-label>
             </ion-item>
         </ion-col>
         <ion-col class="gender" col-5>
             <ion-item>
-                <ion-radio class="radio-marin" value="Female" item-left></ion-radio>
+                <ion-radio class="radio-marin" value="female" item-left></ion-radio>
                 <ion-label class="no-marin">Female</ion-label>
             </ion-item>
         </ion-col>
@@ -61,15 +61,15 @@
                     <ion-icon name="mic"></ion-icon>
                 </button>
         </ion-buttons>
-        <ion-input type="number" [value]="patient.age"></ion-input>
+        <ion-input type="number" [value]="patient.age" [(ngModel)] = "patient.birthday"></ion-input>
     </ion-item>
 
     <ion-item>
         <ion-label color="primary">Heathcare ID</ion-label>
-        <ion-input type="text" [value]="patient.heathcareid"></ion-input>
+        <ion-input type="text" [value]="patient.heathcareid" [(ngModel)] = "patient.heathcareid"></ion-input>
     </ion-item>
 
-    <ion-item-group radio-group>
+    <ion-item-group radio-group [(ngModel)]="patient.severity">
         <ion-item-divider>
             <ion-label class="divider-text" color="primary">Emergency Severity Index</ion-label>
         </ion-item-divider>
@@ -102,15 +102,19 @@
     </ion-item-divider>
     <ion-item>
         <ion-label>Alleric</ion-label>
+        <ion-input type="text" [(ngModel)]="patient.alleric"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label>Blood type</ion-label>
+        <ion-input type="text"[(ngModel)]="patient.bloodtype"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label>Surgery history</ion-label>
+        <ion-input type="text" [(ngModel)]="patient.surgery_history"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label>Mental illness</ion-label>
+        <ion-input type="text" [(ngModel)]="patient.mental_illness"></ion-input>
     </ion-item>
 
     <ion-item>
