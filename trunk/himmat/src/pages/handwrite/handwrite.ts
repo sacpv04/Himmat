@@ -6,6 +6,8 @@ import { Storage } from '@ionic/storage';
 import { Events } from 'ionic-angular';
 import { DetailsPage } from '../detail_page/details_page';
 import { Patient } from '../services/PatientApi';
+import {ElementRef} from '@angular/core';
+
 @Component({
   selector: 'page-signature',
   templateUrl: 'handwrite.html',
@@ -29,7 +31,8 @@ export class HandWrite {
       public navCtrl: NavController,
       public storage: Storage,
       public events: Events,
-      public navParams:NavParams
+      public navParams:NavParams,
+      public elRef: ElementRef
     ) {
         this.patientId = this.navParams.data.item;
         console.log(this.patientId);
@@ -41,7 +44,15 @@ export class HandWrite {
        this.storage.get(this.patientId).then((data) => {
        this.signature = data;
        if(this.signature) {
-           this.signaturePad.fromDataURL(this.signature);
+           let canvas = this.elRef.nativeElement.querySelector('canvas');
+           let ctx = canvas.getContext("2d");
+
+           let image = new Image();
+           image.onload = function() {
+              ctx.drawImage(image, 0,0);
+           }
+           image.src = this.signature;
+           //this.signaturePad.fromDataURL(this.signature);
        }
     });
     
