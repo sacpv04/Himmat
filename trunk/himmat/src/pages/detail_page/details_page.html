@@ -3,6 +3,11 @@
         <ion-title>
             {{ patient.name }}
         </ion-title>
+        <ion-buttons right>
+            <button ion-button icon-only item-end>
+              <ion-icon name="checkmark"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
@@ -27,8 +32,10 @@
     </ion-item>
 
     <ion-row radio-group [(ngModel)]="sexe">
-       
-        <ion-col class="gender-lable" col-3><ion-item><ion-label class="no-marin" >Gender</ion-label></ion-item>
+        <ion-col class="gender-lable" col-3>
+            <ion-item>
+                <ion-label class="no-marin">Gender</ion-label>
+            </ion-item>
         </ion-col>
         <ion-col class="gender" col-4>
             <ion-item class="no-boder-icon">
@@ -63,21 +70,23 @@
     </ion-item>
 
     <ion-item-group radio-group>
-        <ion-item-divider><ion-label color="primary">Emergency Severity Index</ion-label></ion-item-divider>
+        <ion-item-divider>
+            <ion-label class="divider-text" color="primary">Emergency Severity Index</ion-label>
+        </ion-item-divider>
         <ion-item>
             <ion-radio class="radio-marin" color="esi1" item-start value="1"></ion-radio>
             <ion-label color="esi1">ESI 1 (Resuscitation)</ion-label>
         </ion-item>
         <ion-item>
             <ion-radio class="radio-marin" color="red" item-start value="2"></ion-radio>
-            <ion-label color="red">ES2 2 (Emergent)</ion-label>
+            <ion-label color="red">ESI 2 (Emergent)</ion-label>
         </ion-item>
         <ion-item>
             <ion-radio class="radio-marin" color="orange" item-start value="3"></ion-radio>
             <ion-label color="orange">ESI 3 (Urgent)</ion-label>
         </ion-item>
         <ion-item>
-            <ion-radio class="radio-marin" color="yellow" item-start value="4"></ion-radio>
+            <ion-radio color="esi4" class="radio-marin" item-start value="4"></ion-radio>
             <ion-label color="esi4">ESI 4 (Less Urgent)</ion-label>
         </ion-item>
 
@@ -88,7 +97,9 @@
 
     </ion-item-group>
 
-    <ion-item-divider><ion-label color="primary">Retrieve Historical Data (OHC)</ion-label></ion-item-divider>
+    <ion-item-divider>
+        <ion-label class="divider-text" color="primary">Retrieve Historical Data (OHC)</ion-label>
+    </ion-item-divider>
     <ion-item>
         <ion-label>Alleric</ion-label>
     </ion-item>
@@ -122,9 +133,8 @@
         </button>
     </ion-item>
     <ion-item>
-            <ion-label>Mental illness
-                <img [src] ="signature">
-            </ion-label>
-
+        <ion-label>Mental illness
+            <img [src]="signature">
+        </ion-label>
     </ion-item>
 </ion-content>

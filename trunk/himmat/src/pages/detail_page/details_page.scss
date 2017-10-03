@@ -9,7 +9,7 @@ detail-page{
    background-color: red
 }
 
-.app-font-13 ion-label{
+.app-font-13 ion-label {
     white-space: inherit;
     font-size: 13px;
   }
@@ -55,6 +55,7 @@ detail-page{
     border-bottom:  none;
  }
 
- ion-item-divider ion-lable {
-    font-style:italic;
+ .divider-text {
+    font-size: 1.4rem; 
+    font-style:italic !important;
  }

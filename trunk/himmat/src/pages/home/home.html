@@ -1,29 +1,29 @@
 <ion-header>
-
   <ion-navbar color="header-color">
     <ion-buttons left>
-    <button ion-button icon-only clear color="light" (click)="openNavDetailsPage()">
+      <button ion-button icon-only clear color="light" (click)="newDetailsPage()">
         <ion-icon name="person-add" ></ion-icon>
     </button>
-  </ion-buttons>
-
+    </ion-buttons>
     <ion-title>
       Pre-Triage
     </ion-title>
-
     <ion-buttons right>
-    <button ion-button round item-end>
-      <ion-icon name="ios-more"></ion-icon>
+      <button ion-button icon-only round item-end (click)="openMenu()">
+      <ion-icon name="more"></ion-icon>
     </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content>  
-  <ion-list>   
-    <button ion-item *ngFor="let user of users" (click)="openNavDetailsPage(user)" icon-start>
-      <ion-icon name="person" item-start></ion-icon>
-      {{ user }}
-    </button>
+<ion-content>
+  <ion-list class="list-avatar-page">
+    <ion-item ion-item ion-item *ngFor="let user of users" (click)="openNavDetailsPage(user)">
+      <ion-icon item-start name="person">
+      </ion-icon>
+      <h2>{{ user }}</h2>
+      <p>patent description here</p>
+      <ion-note item-end>Arr: 5:47 am</ion-note>
+    </ion-item>
   </ion-list>
 </ion-content>
