@@ -72,6 +72,57 @@ import { Patient } from '../services/PatientApi';
        });
     }
 
+    addPatient() {
+      var current_date = new Date();
+      var hours = current_date.getHours();
+      var minutes = current_date.getMinutes();
+      var ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      var new_minutes = minutes < 10 ? '0'+ minutes : minutes;
+      var strTime = hours + ':' + new_minutes + ' ' + ampm;
+      this.patient.arrived = strTime;
+      this.patient.display = true;
+      if(this.patient.id === "" || this.patient.id === undefined) {
+        this.patient.display = false;
+      } else if (this.patient.name  === "" || this.patient.name === undefined) {
+        this.patient.display = false;
+      } else if (this.patient.gender  === "" || this.patient.gender === undefined) {
+        this.patient.display = false;
+      } else if (this.patient.birthday  === "" || this.patient.birthday === undefined) {
+        this.patient.display = false;
+      } else if (this.patient.severity === "" || this.patient.severity === undefined) {
+        this.patient.display = false;
+      } else if (this.patient.alleric === "" || this.patient.alleric === undefined) {
+        this.patient.display = false;
+      } else if (this.patient.bloodtype === "" || this.patient.bloodtype === undefined) {
+        this.patient.display = false;
+      } else if (this.patient.surgery_history === "" || this.patient.surgery_history === undefined) {
+        this.patient.display = false;
+      } else if (this.patient.mental_illness === "" || this.patient.mental_illness === undefined) {
+        this.patient.display = false;
+      }
+
+      switch(this.patient.severity)
+      {
+          case "1":
+              this.patient.color = "primary";
+              break;
+          case "2":
+              this.patient.color = "red";
+              break;
+          case "3":
+              this.patient.color = "orange";
+              break;
+          case "4":
+              this.patient.color = "yellow";
+              break;          
+          default:
+              this.patient.color = "oxygen";
+      }      
+      this.events.publish('users:created', this.patient);
+    }
+
     openPhotoRecording(){
       this.nav.push(PhotoRecording);
     }

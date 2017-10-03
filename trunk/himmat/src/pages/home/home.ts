@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DetailsPage } from '../detail_page/details_page';
-import { Patient } from '../services/PatientApi';
 import { Platform, ActionSheetController } from 'ionic-angular';
+import { Events } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -10,23 +10,16 @@ import { Platform, ActionSheetController } from 'ionic-angular';
 })
 export class HomePage {
   items: any = [];
-  private users = [];
   private names = [];
+  patients:any = [];
   constructor(public nav: NavController, public platform: Platform,
-    public actionsheetCtrl: ActionSheetController, private patientAPI: Patient) {
-    this.patientAPI.getPartients().then(res => {
-      this.items = res;
-      this.items.entry.forEach(element => {
-        if (element.resource.name) {
-          this.names.push(element.resource.name);
-        }
-      });
-      this.names.forEach(element => {
-        this.users.push(element[0].family);
-      });
+    public actionsheetCtrl: ActionSheetController, private events: Events) {
+  }
+
+  ngOnInit() {
+    this.events.subscribe('users:created', (patient) => {
+      this.patients.push(patient);
     });
-    
-    
   }
 
   openNavDetailsPage(user) {
