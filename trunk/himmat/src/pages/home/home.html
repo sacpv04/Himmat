@@ -18,24 +18,20 @@
 
 <ion-content>
   <ion-list class="list-avatar-page">
-    <ion-item ion-item ion-item *ngFor="let user of users" (click)="openNavDetailsPage(user)">
+    <ion-item ion-item ion-item *ngFor="let patient of patients" (click)="openNavDetailsPage(patient)">
       <button ion-button clear class="star" item-left>
-          <ion-icon name="star" ></ion-icon>          
+          <ion-icon name="star"  [hidden]="patient.display" color="yellow"></ion-icon>          
       </button>
-      <ion-icon item-left name="person">
+      <ion-icon item-left name="person" [color]="patient.color">
       </ion-icon>
       <ion-grid>
         <ion-row justify-content-between>
           <h3>{{ patient.name }}</h3> <ion-note>Arrived</ion-note>         
-        </ion-row>
-        
+        </ion-row>        
         <ion-row justify-content-between>
-          <div>Age: 72</div> <div>M</div> <div>ESI: 3</div> <div>3:40pm</div>
+          <div>Age: {{ patient.age }}</div> <div>M</div> <div>ESI: {{ patient.severity }}</div> <div> {{ patient.arrived }}</div>
          </ion-row>
-      </ion-grid>
-      <!-- <h2>{{ user }}</h2>
-      <p>Age:72 &nbsp;M &nbsp;Esi:3</p> -->
-      <!--  -->
+      </ion-grid>      
     </ion-item>
   </ion-list>
 </ion-content>

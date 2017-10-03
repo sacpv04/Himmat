@@ -61,12 +61,12 @@
                     <ion-icon name="mic"></ion-icon>
                 </button>
         </ion-buttons>
-        <ion-input type="number" [value]="patient.age" [(ngModel)] = "patient.birthday"></ion-input>
+        <ion-input type="number" [(ngModel)] = "patient.age"></ion-input>
     </ion-item>
 
     <ion-item>
         <ion-label color="primary">Heathcare ID</ion-label>
-        <ion-input type="text" [value]="patient.heathcareid" [(ngModel)] = "patient.heathcareid"></ion-input>
+        <ion-input type="text" [(ngModel)] = "patient.heathcareid"></ion-input>
     </ion-item>
 
     <ion-item-group radio-group [(ngModel)]="patient.severity">

@@ -63,12 +63,20 @@ import { Patient } from '../services/PatientApi';
             this.patient.name = this.patients[i].name[0].family;
             this.patient.heathcareid = id;
             this.patient.brithday = this.patients[i].birthDate;
+            var dateOfBirth = new Date(this.patients[i].birthDate);
+            this.patient.age = this.getAge(dateOfBirth);
             break; 
           }                   
         }                
        }, (err) => {
            // An error occurred
        });
+    }
+
+    getAge(date) {
+      var now = new Date();
+      var age = now.getFullYear() - date.getFullYear();
+      return age;
     }
 
     addPatient() {
