@@ -139,13 +139,9 @@ import { Patient } from '../services/PatientApi';
                 break;          
             default:
                 this.patient.color = "oxygen";
-        }      
+        }          
         this.events.publish('users:created', this.patient);
-        this.presentAlert("Patient Saving", "New Patient is saving successful !", ["OK"]);
-        this.patient.id = "";
-        this.patient.name = "";
-        this.patient.age = "";
-        this.patient.heathcareid = "";
+        this.presentAlert("Patient Saving", "New Patient is saving successful !", ["OK"]);        
       }
     }
 
@@ -160,7 +156,7 @@ class PatientModel {
   id: string;
   name: string;
   gender: string;
-  age: string;
+  age: number;
   heathcareid: string;
   imageName: String;
   severity:string;
