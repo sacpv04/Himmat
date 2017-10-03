@@ -9,8 +9,7 @@ import { Events } from 'ionic-angular';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  items: any = [];
-  private names = [];
+  items: any = []; 
   patients:any = [];
   constructor(public nav: NavController, public platform: Platform,
     public actionsheetCtrl: ActionSheetController, private events: Events) {
@@ -19,9 +18,8 @@ export class HomePage {
   ngOnInit() {
     this.events.subscribe('users:created', (res) => {
       console.log(res);
-      this.patients.push(res);
-    });
-    console.log(this.patients);
+      this.patients.push(res);     
+    });      
   }
 
   openNavDetailsPage(patient) {

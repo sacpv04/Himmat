@@ -18,7 +18,7 @@
 
 <ion-content>
   <ion-list class="list-avatar-page">
-    <ion-item ion-item ion-item *ngFor="let patient of patienst" (click)="openNavDetailsPage(patient)">
+    <ion-item ion-item ion-item *ngFor="let patient of patients" (click)="openNavDetailsPage(patient)">
       <ion-icon item-start name="person">
       </ion-icon>
       <h2>{{ patient.name }}</h2>
