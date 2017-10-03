@@ -47,7 +47,6 @@ export class HomePage {
   }
 
   openMenu() {
-    console.log('Click');
     let actionSheet = this.actionsheetCtrl.create({
       title: 'Actions',
       cssClass: 'action-sheets-basic-page',
@@ -64,14 +63,14 @@ export class HomePage {
           text: 'Atcion 1',
           icon: !this.platform.is('ios') ? 'share' : null,
           handler: () => {
-            console.log('Item 1');
+            console.log('Action 1');
           }
         },
         {
           text: 'Action 2',
           icon: !this.platform.is('ios') ? 'arrow-dropright-circle' : null,
           handler: () => {
-            console.log('Item 2');
+            console.log('Action 2');
           }
         },
         {

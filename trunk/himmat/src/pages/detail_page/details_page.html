@@ -13,7 +13,7 @@
 
 <ion-content padding>
     <ion-item>
-        <ion-label>Patient # (QR)</ion-label>
+        <ion-label color="primary">Patient # (QR)</ion-label>
         <ion-input type="text"></ion-input>
         <button ion-button item-end (click)="scanQRCode()">
             <ion-icon name="qr-scanner"></ion-icon>
@@ -21,7 +21,7 @@
     </ion-item>
 
     <ion-item>
-        <ion-label>Name</ion-label>
+        <ion-label color="primary">Name</ion-label>
         <ion-input type="text" [value]="patient.name"></ion-input>
         <button ion-button class="no-boder-icon" item-end color="grey" outline icon-only>
             <ion-icon name="create"></ion-icon>
@@ -34,25 +34,25 @@
     <ion-row radio-group [(ngModel)]="sexe">
         <ion-col class="gender-lable" col-3>
             <ion-item>
-                <ion-label class="no-marin">Gender</ion-label>
+                <ion-label class="no-marin" color="primary">Gender</ion-label>
             </ion-item>
         </ion-col>
         <ion-col class="gender" col-4>
             <ion-item class="no-boder-icon">
-                <ion-radio class="radio-marin" value="male" item-left></ion-radio>
+                <ion-radio class="radio-marin" value="Male" item-left></ion-radio>
                 <ion-label class="no-marin">Male</ion-label>
             </ion-item>
         </ion-col>
         <ion-col class="gender" col-5>
             <ion-item>
-                <ion-radio class="radio-marin" value="female" item-left></ion-radio>
+                <ion-radio class="radio-marin" value="Female" item-left></ion-radio>
                 <ion-label class="no-marin">Female</ion-label>
             </ion-item>
         </ion-col>
     </ion-row>
 
     <ion-item>
-        <ion-label>Age</ion-label>
+        <ion-label color="primary">Age</ion-label>
         <ion-buttons end>
             <button ion-button item-end color="grey" clear icon-only>
                 <ion-icon name="create"></ion-icon>
@@ -65,7 +65,7 @@
     </ion-item>
 
     <ion-item>
-        <ion-label>Heathcare ID</ion-label>
+        <ion-label color="primary">Heathcare ID</ion-label>
         <ion-input type="text" [value]="patient.heathcareid"></ion-input>
     </ion-item>
 
