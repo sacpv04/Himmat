@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { NavController, NavParams} from 'ionic-angular';
+import { NavController, NavParams, FabContainer } from 'ionic-angular';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { HomePage } from '../home/home';
 import { Storage } from '@ionic/storage';
@@ -11,9 +11,7 @@ import { Patient } from '../services/PatientApi';
   templateUrl: 'edit_photo.html',
 })
 export class EditPhoto implements AfterViewInit{
-  ngAfterViewInit(){
-    this.setBackgroundImage(this.params.data.base64Image);
-  }
+
   @ViewChild(SignaturePad) public signaturePad : SignaturePad;
   content = '';
   isDrawing = false;
@@ -27,9 +25,13 @@ export class EditPhoto implements AfterViewInit{
       public toastCtrl: ToastController,
       public params: NavParams,
       public elementRef: ElementRef
-    ) {        
+    ) {       
+        this.InitializeCanvas();
         
-        
+    }
+
+    ngAfterViewInit(){    
+      this.setBackgroundImage(this.params.data.base64Image);
     }
 
     private InitializeCanvas(){
@@ -37,7 +39,6 @@ export class EditPhoto implements AfterViewInit{
         'minWidth': 2,
         'canvasWidth': window.screen.width,
         'canvasHeight': window.screen.height,
-        'backgroundColor': '#fff',
         'penColor': '#666a73'
       };
       
@@ -50,7 +51,8 @@ export class EditPhoto implements AfterViewInit{
       let context = canvas.getContext('2d');
       let image = new Image();
       image.onload = function(){
-        context.drawImage(image, 0, 0);
+        context.drawImage(image, 0, 0, image.width, image.height,
+                                  0, 0, canvas.width, canvas.height);
       }
       image.src = img;
     }  
@@ -82,5 +84,29 @@ export class EditPhoto implements AfterViewInit{
         position: 'bottom',
         duration: 20000
     }).present();
-}
+  }
+
+  savePhoto(){
+    this.content = this.signaturePad.toDataURL();
+    this.storage.set('photo_note', this.content);
+    this.signaturePad.clear();
+    //this.navCtrl
+    this.goBack();
+  }
+
+  private goBack(){
+    this.signaturePad.clear();
+    this.navCtrl.popToRoot();
+  }
+
+  setColor(color: string, fab: FabContainer){    
+    this.signaturePad.set('penColor', color);
+    fab.close();
+  }
+
+  clearContent(){
+      //this.DisplayMessage('clear');
+    this.signaturePad.clear();
+    this.setBackgroundImage(this.params.data.base64Image);
+  }
 }

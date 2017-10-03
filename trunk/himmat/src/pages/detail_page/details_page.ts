@@ -4,6 +4,7 @@ import { NavController, AlertController } from 'ionic-angular';
 import { QRCode } from '../qrcode/qrcode';
 import { HandWrite } from '../handwrite/handwrite';
 import { PhotoRecording } from '../photo_recording/photo_recording';
+
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
@@ -146,8 +147,10 @@ import { Patient } from '../services/PatientApi';
     }
 
     openPhotoRecording(){
-      this.nav.push(PhotoRecording);
+      var info = {patientID: this.patient.id};
+      this.nav.push(PhotoRecording, info);
     }
+
 
 
 }

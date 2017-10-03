@@ -16,8 +16,9 @@ export class PhotoRecording{
     public base64Image: string;
     
     
-    constructor( public nav: NavController, public toastCtrl: ToastController,
-                 public diagnostic: Diagnostic, public cameraPreview: CameraPreview){
+    constructor(public nav: NavController, public toastCtrl: ToastController,
+                 public diagnostic: Diagnostic, public cameraPreview: CameraPreview,
+                public params: NavParams){
         this.checkPermission();
     }
 
@@ -75,19 +76,21 @@ export class PhotoRecording{
 
     takePicture(){
         let pictureOpts: CameraPreviewPictureOptions = {
-            width: 800,
-            height: 800,
-            quality: 60
+            width: window.screen.width,
+            height: window.screen.height,
+            quality: 85
         };
         this.cameraPreview.takePicture(pictureOpts).then((imageData) => {
-            //this.cameraPreview.stopCamera();
-            //this.DisplayMessage('ok');
-
-            this.nav.push(EditPhoto, {base64Image: 'data:image/jpeg;base64,' + imageData});
-            //this.nav.push(EditPhoto);
+            
+            this.nav.push(EditPhoto, {base64Image: 'data:image/jpeg;base64,' + imageData,
+                                    patientID: this.params.data.patientID});
         }, (err) => {
             this.DisplayMessage("TakePicture: " + err);
         })
+    }
+
+    showInfo(){
+        this.DisplayMessage(this.params.data.patientID);
     }
 
     private DisplayMessage(msg: string){
