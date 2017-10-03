@@ -20,10 +20,16 @@
 </ion-header>
 
 <ion-content>  
-  <ion-list *ngFor="let patient of patients" (click)="openNavDetailsPage(patient)">   
-    <button ion-item icon-start>
+  <ion-list *ngFor="let patient of patients" (click)="openNavDetailsPage(patient)">  
+      <ion-item>         
+          <ion-icon name="star"  [hidden]="patient.display" color="yellow"></ion-icon>         
+          <ion-icon name="person" [color]="patient.color"></ion-icon>
+          {{ patient.name }}
+      </ion-item>    
+    <!-- <button ion-item icon-start>
+      <ion-icon name="star"></ion-icon>   
       <ion-icon name="person" item-start></ion-icon>
       {{ patient.name }}
-    </button>
+    </button> -->
   </ion-list>
 </ion-content>

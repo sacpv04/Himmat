@@ -40,7 +40,45 @@ import { Events } from 'ionic-angular';
       hours = hours ? hours : 12; // the hour '0' should be '12'
       var new_minutes = minutes < 10 ? '0'+ minutes : minutes;
       var strTime = hours + ':' + new_minutes + ' ' + ampm;
-      this.patient.arrived = strTime;     
+      this.patient.arrived = strTime;
+      this.patient.display = true;
+      if(this.patient.id === "" || this.patient.id === undefined) {
+        this.patient.display = false;
+      } else if (this.patient.name  === "" || this.patient.name === undefined) {
+        this.patient.display = false;
+      } else if (this.patient.gender  === "" || this.patient.gender === undefined) {
+        this.patient.display = false;
+      } else if (this.patient.birthday  === "" || this.patient.birthday === undefined) {
+        this.patient.display = false;
+      } else if (this.patient.severity === "" || this.patient.severity === undefined) {
+        this.patient.display = false;
+      } else if (this.patient.alleric === "" || this.patient.alleric === undefined) {
+        this.patient.display = false;
+      } else if (this.patient.bloodtype === "" || this.patient.bloodtype === undefined) {
+        this.patient.display = false;
+      } else if (this.patient.surgery_history === "" || this.patient.surgery_history === undefined) {
+        this.patient.display = false;
+      } else if (this.patient.mental_illness === "" || this.patient.mental_illness === undefined) {
+        this.patient.display = false;
+      }
+
+      switch(this.patient.severity)
+      {
+          case "ESI 1":
+              this.patient.color = "primary";
+              break;
+          case "ESI 2":
+              this.patient.color = "red";
+              break;
+          case "ESI 3":
+              this.patient.color = "orange";
+              break;
+          case "ESI 4":
+              this.patient.color = "yellow";
+              break;          
+          default:
+              this.patient.color = "oxygen";
+      }      
       this.evens.publish('users:created', this.patient);
     }
 
@@ -73,13 +111,15 @@ class PatientModel {
   id: string;
   name: string;
   gender: string;
-  brithday: string;
+  birthday: string;
   severity:string;
   alleric:string;
   bloodtype:string;
   surgery_history:string;
   mental_illness:string;
   quick_note:string;
-  arrived:string;    
+  arrived:string;
+  color:string;
+  display:boolean;    
 }
 
