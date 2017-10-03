@@ -17,26 +17,19 @@ export class HomePage {
   }
 
   ngOnInit() {
-    this.events.subscribe('users:created', (patient) => {
-      this.patients.push(patient);
+    this.events.subscribe('users:created', (res) => {
+      console.log(res);
+      this.patients.push(res);
     });
+    console.log(this.patients);
   }
 
-  openNavDetailsPage(user) {
-    var patient = {   
-      'name': '',
-      "icon": "person"
-    }
-    patient.name = user;
+  openNavDetailsPage(patient) {
     this.nav.push(DetailsPage, { item: patient });
   }
 
-  newDetailsPage() {
-    var patient = {
-      'name': 'New User',
-      'icon': 'person'
-    }
-    this.nav.push(DetailsPage, { item: patient });
+  newDetailsPage() {    
+    this.nav.push(DetailsPage);
   }
 
   openMenu() {

@@ -29,8 +29,7 @@ import { Patient } from '../services/PatientApi';
     ) {
       var item = params.data.item;
       var sexe : string;
-      this.patient = new PatientModel();
-      this.patient.name = item.name;
+      this.patient = new PatientModel();      
       this.events.subscribe("imageName", (imageName) => {
         this.storage.get(imageName).then((data) => {
           this.signature = data;         
