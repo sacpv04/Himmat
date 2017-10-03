@@ -64,16 +64,16 @@ import { Events } from 'ionic-angular';
 
       switch(this.patient.severity)
       {
-          case "ESI 1":
+          case "1":
               this.patient.color = "primary";
               break;
-          case "ESI 2":
+          case "2":
               this.patient.color = "red";
               break;
-          case "ESI 3":
+          case "3":
               this.patient.color = "orange";
               break;
-          case "ESI 4":
+          case "4":
               this.patient.color = "yellow";
               break;          
           default:

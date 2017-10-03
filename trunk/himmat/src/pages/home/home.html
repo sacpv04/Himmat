@@ -24,7 +24,27 @@
       <ion-item>         
           <ion-icon name="star"  [hidden]="patient.display" color="yellow"></ion-icon>         
           <ion-icon name="person" [color]="patient.color"></ion-icon>
-          {{ patient.name }}
+          <table>
+            <tr>
+              <td colspan="6">{{ patient.name }}</td>
+            </tr>
+            <tr>
+              <td>Birhday Day: </td>
+              <td>{{ patient.birthday }}</td>
+              <td>Gender: </td>
+              <td>{{ patient.gender }}</td>
+              <td>ESI: </td>
+              <td>{{ patient.severity }}</td>
+            </tr>
+          </table>
+          <table>
+              <tr>
+                <td>Arrived</td>
+              </tr>
+              <tr>                
+                <td>{{ patient.arrived }}</td>                
+              </tr>
+            </table>            
       </ion-item>    
     <!-- <button ion-item icon-start>
       <ion-icon name="star"></ion-icon>   
