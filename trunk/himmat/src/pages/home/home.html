@@ -21,9 +21,9 @@
 
 <ion-content>  
   <ion-list>   
-    <button ion-item *ngFor="let user of users" (click)="openNavDetailsPage(user)" icon-start>
+    <button ion-item *ngFor="let patient of patients" (click)="openNavDetailsPage(patient)" icon-start>
       <ion-icon name="person" item-start></ion-icon>
-      {{ user }}
+      {{ patient.name }}
     </button>
   </ion-list>
 </ion-content>

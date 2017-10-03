@@ -4,7 +4,7 @@ import { NavController } from 'ionic-angular';
 import { QRCode } from '../qrcode/qrcode';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Patient } from '../services/PatientApi';
-import { AlertController } from 'ionic-angular';
+import { Events } from 'ionic-angular';
 
 @Component({
     templateUrl: 'details_page.html',
@@ -15,8 +15,8 @@ import { AlertController } from 'ionic-angular';
     maleGender:string;
     femaleGender:string;
     items:any = [];
-    private patients = [];   
-    constructor(public nav: NavController, params: NavParams, private barcodeScanner: BarcodeScanner, private patientAPI: Patient, private alertCtr: AlertController) {
+    private patients = []; 
+    constructor(public nav: NavController, params: NavParams, private barcodeScanner: BarcodeScanner, private patientAPI: Patient, private evens: Events) {
       this.item = params.data.item;      
       this.patient = new PatientModel();
       this.patientAPI.getPartients().then(res => {
@@ -31,16 +31,8 @@ import { AlertController } from 'ionic-angular';
       this.nav.push(QRCode);
     }
 
-    addPatient() {           
-      this.patient.id = this.patient.id;
-      this.patient.name = this.patient.name;     
-      this.patient.gender = this.patient.gender;
-      this.patient.brithday = this.patient.brithday;
-      this.patient.severity = this.patient.severity;
-      this.patient.alleric = this.patient.alleric;
-      this.patient.bloodtype = this.patient.bloodtype;
-      this.patient.surgery_history = this.patient.surgery_history;
-      this.patient.mental_illness = this.patient.mental_illness;
+    addPatient() {      
+      this.evens.publish('users:created', this.patient);
     }
 
     scanQRCode() {     
