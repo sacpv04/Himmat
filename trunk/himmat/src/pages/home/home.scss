@@ -12,11 +12,18 @@ $list-md-border-color:green;
     ion-note {
         font-size: 1.4rem;
         align-self: flex-start;
-        margin-top: 1.8rem !important;
         color: gray;
     }
 }
 
+.list-avatar-page {
+  ion-row {
+    div {
+      color: #888888;
+      font-size: 1.4rem;
+    }
+  }
+}
 .action-sheets-basic-page {
     .ion-md-share {
       color: #ED4248;
@@ -31,4 +38,8 @@ $list-md-border-color:green;
     .action-sheet-destructive ion-icon {
       color: #757575;
     }
+  }
+
+  .star {
+    margin: 0px !important;
   }

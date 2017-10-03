@@ -19,11 +19,23 @@
 <ion-content>
   <ion-list class="list-avatar-page">
     <ion-item ion-item ion-item *ngFor="let user of users" (click)="openNavDetailsPage(user)">
-      <ion-icon item-start name="person">
+      <button ion-button clear class="star" item-left>
+          <ion-icon name="star" ></ion-icon>          
+      </button>
+      <ion-icon item-left name="person">
       </ion-icon>
-      <h2>{{ user }}</h2>
-      <p>patent description here</p>
-      <ion-note item-end>Arr: 5:47 am</ion-note>
+      <ion-grid>
+        <ion-row justify-content-between>
+          <h3>{{ user }}</h3> <ion-note>Arrived</ion-note>         
+        </ion-row>
+        
+        <ion-row justify-content-between>
+          <div>Age: 72</div> <div>M</div> <div>ESI: 3</div> <div>3:40pm</div>
+         </ion-row>
+      </ion-grid>
+      <!-- <h2>{{ user }}</h2>
+      <p>Age:72 &nbsp;M &nbsp;Esi:3</p> -->
+      <!--  -->
     </ion-item>
   </ion-list>
 </ion-content>
