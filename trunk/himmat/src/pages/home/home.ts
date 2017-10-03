@@ -14,7 +14,8 @@ export class HomePage {
   }
 
   ngOnInit() {
-    this.events.subscribe('users:created', (patient) => {      
+    this.events.subscribe('users:created', (patient) => {
+      console.log(patient);      
       this.patients.push(patient);
     });
   }

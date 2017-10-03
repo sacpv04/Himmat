@@ -31,7 +31,16 @@ import { Events } from 'ionic-angular';
       this.nav.push(QRCode);
     }
 
-    addPatient() {      
+    addPatient() {
+      var current_date = new Date();
+      var hours = current_date.getHours();
+      var minutes = current_date.getMinutes();
+      var ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      var new_minutes = minutes < 10 ? '0'+ minutes : minutes;
+      var strTime = hours + ':' + new_minutes + ' ' + ampm;
+      this.patient.arrived = strTime;     
       this.evens.publish('users:created', this.patient);
     }
 
@@ -70,6 +79,7 @@ class PatientModel {
   bloodtype:string;
   surgery_history:string;
   mental_illness:string;
-  quick_note:string;    
+  quick_note:string;
+  arrived:string;    
 }
 
