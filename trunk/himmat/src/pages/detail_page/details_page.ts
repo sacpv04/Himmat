@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavParams } from 'ionic-angular';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { QRCode } from '../qrcode/qrcode';
 import { HandWrite } from '../handwrite/handwrite';
 import { PhotoRecording } from '../photo_recording/photo_recording';
@@ -25,6 +25,7 @@ import { Patient } from '../services/PatientApi';
       private barcodeScanner: BarcodeScanner,     
       private events: Events,
       private patientAPI: Patient,
+      private alertCtrl: AlertController,
       public storage: Storage,
     ) {
       var item = params.data.item;
@@ -79,55 +80,73 @@ import { Patient } from '../services/PatientApi';
       return age;
     }
 
-    addPatient() {
-      var current_date = new Date();
-      var hours = current_date.getHours();
-      var minutes = current_date.getMinutes();
-      var ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      hours = hours ? hours : 12; // the hour '0' should be '12'
-      var new_minutes = minutes < 10 ? '0'+ minutes : minutes;
-      var strTime = hours + ':' + new_minutes + ' ' + ampm;
-      this.patient.arrived = strTime;
-      this.patient.display = true;
-      if(this.patient.id === "" || this.patient.id === undefined) {
-        this.patient.display = false;
-      } else if (this.patient.name  === "" || this.patient.name === undefined) {
-        this.patient.display = false;
-      } else if (this.patient.gender  === "" || this.patient.gender === undefined) {
-        this.patient.display = false;
-      } else if (this.patient.birthday  === "" || this.patient.birthday === undefined) {
-        this.patient.display = false;
-      } else if (this.patient.severity === "" || this.patient.severity === undefined) {
-        this.patient.display = false;
-      } else if (this.patient.alleric === "" || this.patient.alleric === undefined) {
-        this.patient.display = false;
-      } else if (this.patient.bloodtype === "" || this.patient.bloodtype === undefined) {
-        this.patient.display = false;
-      } else if (this.patient.surgery_history === "" || this.patient.surgery_history === undefined) {
-        this.patient.display = false;
-      } else if (this.patient.mental_illness === "" || this.patient.mental_illness === undefined) {
-        this.patient.display = false;
-      }
+    presentAlert(title, subTitle, buttons) {
+      const alert = this.alertCtrl.create({
+        title: title,
+        subTitle: subTitle,
+        buttons: buttons
+      });
+      alert.present();
+    }
 
-      switch(this.patient.severity)
-      {
-          case "1":
-              this.patient.color = "primary";
-              break;
-          case "2":
-              this.patient.color = "red";
-              break;
-          case "3":
-              this.patient.color = "orange";
-              break;
-          case "4":
-              this.patient.color = "yellow";
-              break;          
-          default:
-              this.patient.color = "oxygen";
-      }      
-      this.events.publish('users:created', this.patient);
+    addPatient() {
+      if (this.patient.heathcareid === "" || this.patient.heathcareid === undefined) {
+        this.presentAlert("Heathcare ID", "Heathcare ID is null", ["OK"]);
+      } else if (this.patient.id === "" || this.patient.id === undefined) {
+        this.presentAlert("QR Code", "QR Code is null", ["OK"]);
+      } else {
+        var current_date = new Date();
+        var hours = current_date.getHours();
+        var minutes = current_date.getMinutes();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        var new_minutes = minutes < 10 ? '0'+ minutes : minutes;
+        var strTime = hours + ':' + new_minutes + ' ' + ampm;
+        this.patient.arrived = strTime;
+        this.patient.display = true;
+        if (this.patient.name  === "" || this.patient.name === undefined) {
+          this.patient.display = false;
+        } else if (this.patient.gender  === "" || this.patient.gender === undefined) {
+          this.patient.display = false;
+        } else if (this.patient.age  === "" || this.patient.age === undefined) {
+          this.patient.display = false;
+        } else if (this.patient.severity === "" || this.patient.severity === undefined) {
+          this.patient.display = false;
+        } else if (this.patient.alleric === "" || this.patient.alleric === undefined) {
+          this.patient.display = false;
+        } else if (this.patient.bloodtype === "" || this.patient.bloodtype === undefined) {
+          this.patient.display = false;
+        } else if (this.patient.surgery_history === "" || this.patient.surgery_history === undefined) {
+          this.patient.display = false;
+        } else if (this.patient.mental_illness === "" || this.patient.mental_illness === undefined) {
+          this.patient.display = false;
+        }
+  
+        switch(this.patient.severity)
+        {
+            case "1":
+                this.patient.color = "primary";
+                break;
+            case "2":
+                this.patient.color = "red";
+                break;
+            case "3":
+                this.patient.color = "orange";
+                break;
+            case "4":
+                this.patient.color = "yellow";
+                break;          
+            default:
+                this.patient.color = "oxygen";
+        }      
+        this.events.publish('users:created', this.patient);
+        this.presentAlert("Patient Saving", "New Patient is saving successful !", ["OK"]);
+        this.patient.id = "";
+        this.patient.name = "";
+        this.patient.age = "";
+        this.patient.heathcareid = "";
+      }
     }
 
     openPhotoRecording(){
