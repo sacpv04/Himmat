@@ -37,7 +37,7 @@ import { Storage } from '@ionic/storage';
       })
       this.storage.get(this.patient.name).then((data) => {
         this.signature = data;
-        console.log("received event: " + this.signature);
+        console.log("get ok " + this.signature);
       });
     }
     goQRCode() {
