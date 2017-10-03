@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { NavController, NavParams} from 'ionic-angular';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { HomePage } from '../home/home';
@@ -10,31 +10,25 @@ import { Patient } from '../services/PatientApi';
   selector: 'edit_photo',
   templateUrl: 'edit_photo.html',
 })
-export class EditPhoto {
+export class EditPhoto implements AfterViewInit{
+  ngAfterViewInit(){
+    this.setBackgroundImage(this.params.data.base64Image);
+  }
   @ViewChild(SignaturePad) public signaturePad : SignaturePad;
   content = '';
   isDrawing = false;
   base64Image : any;
   canvas = '';
-  public signaturePadOptions : Object = {
-    'minWidth': 2,
-    'canvasWidth': 340,
-    'canvasHeight': 200,
-    'backgroundColor': '#f6fbff',
-    'penColor': '#666a73'
-  };
 
   constructor(
       public navCtrl: NavController,
       public storage: Storage,
       public events: Events,
       public toastCtrl: ToastController,
-      public params: NavParams
-    ) {
-        //this.base64Image = this.params.data.base64Image;
-        this.DisplayMessage(this.params.data.base64Image);
-        this.InitializeCanvas();
-        //this.setBackgroundImage(this.params.data.base64Image);
+      public params: NavParams,
+      public elementRef: ElementRef
+    ) {        
+        
         
     }
 
@@ -52,11 +46,11 @@ export class EditPhoto {
 
     private setBackgroundImage(img: string)
     {
-      var canvas = document.querySelector('canvas');
-      var context = canvas.getContext('2d');
-      var image = new Image();
+      let canvas = this.elementRef.nativeElement.querySelector('canvas');
+      let context = canvas.getContext('2d');
+      let image = new Image();
       image.onload = function(){
-        context.drawImage(image, window.screen.width, window.screen.height);
+        context.drawImage(image, 0, 0);
       }
       image.src = img;
     }  
