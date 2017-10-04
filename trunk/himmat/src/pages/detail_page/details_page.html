@@ -152,7 +152,7 @@
         <button ion-button item-start (click)="goQRCode()">
             <ion-icon name="skip-forward"></ion-icon>
         </button>
-
+        
         <button ion-button item-start (click) = "doRecord()" [disabled]="isDisableRecord" [color]="isRecording ? 'danger' : '#528D80'"><ion-icon [name]="isRecording ? 'square' : 'recording'"></ion-icon></button>
         <button ion-button item-start (click) = "doPlay()" [disabled]="isDisablePlay" [color]="isPlaying ? 'danger' : '#528D80'"><ion-icon [name]="isPlaying ? 'square' : 'play'"></ion-icon></button>
     </ion-item-divider>
@@ -163,9 +163,15 @@
     <ion-item>
         <ion-label *ngIf="signatureImage">
             <!-- <img [src]="signature"> -->
-            <img [src]="photoCaptured" >
+            
         </ion-label>
-       
+    </ion-item>
+    <ion-item *ngIf="isShowPhoto">
+        <fieldset>
+            <legend>Photo:</legend>
+            <img [src]="photoCaptured" class="photo_captured" >
+        </fieldset>
+        
     </ion-item>
     
 </ion-content>

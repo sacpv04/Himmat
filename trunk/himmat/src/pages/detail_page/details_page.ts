@@ -13,7 +13,7 @@ import { Patient } from '../services/PatientApi';
 import { ToastController } from 'ionic-angular';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { ChangeDetectorRef } from '@angular/core';
-import { MediaPlugin } from 'ionic-native';
+//import { MediaPlugin } from 'ionic-native';
 
 @Component({
     selector: 'detail-page',
@@ -27,17 +27,11 @@ import { MediaPlugin } from 'ionic-native';
     private patients = []; 
     items:any = [];
     public signatureImage = false;
-    media: MediaPlugin;
+    //media: MediaPlugin;
     isRecording = false;
     isPlaying = false;
     isDisableRecord = false;
     isDisablePlay = true;
-
-
-    ionViewWillEnter(){
-             //Subcribe photo image
-       
-    }
 
     constructor(
       public nav: NavController, 
@@ -65,17 +59,9 @@ import { MediaPlugin } from 'ionic-native';
         });
       });
 
-      this.events.subscribe('photo:saved', (photo) => {       
-        if(photo != null || photo != undefined){            
-          this.storage.get("photo" + this.patient.id).then((pic) =>{
-              this.isShowPhoto = true;
-              console.log('xinh : ' + pic);
-              this.photoCaptured = pic;                
-          });
-        }else{
-          this.isShowPhoto = false;
-        }
-    });
+      // Load Photo
+      this.loadPhotoCaptured();     
+
       this.storage.get(this.patient.id).then((data) => {
         console.log(this.patient.id);
         this.signature = data;
@@ -97,9 +83,8 @@ import { MediaPlugin } from 'ionic-native';
         console.log("NAME: " + this.patient.id);
         this.nav.push(HandWrite, {item: this.patient.id});
       } else {
-       // this.showToast("Please scan QR code");
-        this.nav.push(HandWrite, {item: this.patient.id});
-        
+        this.showToast("Please scan QR code");
+        //this.nav.push(HandWrite, {item: this.patient.id});
       }
     }
     scanQRCode() {
@@ -121,6 +106,18 @@ import { MediaPlugin } from 'ionic-native';
        });
     }
 
+    private loadPhotoCaptured(){
+      var photoID = (this.patient.id == undefined) ? 'photo:unknow_id' : 'photo' + this.patient.id;
+      this.storage.get(photoID).then((pic) =>{
+        if(pic != null || pic != undefined)
+        {
+          this.isShowPhoto = true;
+          this.photoCaptured = pic;
+        }else
+          this.isShowPhoto = false;
+      });   
+    }
+
     getAge(date) {
       var now = new Date();
       var age = now.getFullYear() - date.getFullYear();
@@ -138,6 +135,10 @@ import { MediaPlugin } from 'ionic-native';
 
     goBack() {
       this.nav.pop();
+    }
+
+    goEdit(){
+      this.nav.push(EditPhoto);
     }
     
 
@@ -194,6 +195,9 @@ import { MediaPlugin } from 'ionic-native';
         }               
         this.events.publish('users:created', this.patient);
         this.nav.first; 
+
+        //Save photo unknow id
+        this.storage.set(this.patient.id, this.photoCaptured);
       }
     }
 
@@ -207,7 +211,7 @@ import { MediaPlugin } from 'ionic-native';
 
     ionViewDidEnter() {
       //this.getPermissionSpeechRecognition();
-      this.media = new MediaPlugin('recording.wav');
+      //this.media = new MediaPlugin('recording.wav');
       
     }
 
@@ -247,14 +251,6 @@ import { MediaPlugin } from 'ionic-native';
         this.cd.detectChanges();
         this.patient.name = matches[0];
       });
-    }
-
-    private DisplayMessage(msg: string){
-        this.toastCtrl.create({
-            message: msg,
-            position: 'bottom',
-            duration: 3000
-        }).present();
     }
 
     speechToTextQuickNote() {
@@ -337,7 +333,7 @@ import { MediaPlugin } from 'ionic-native';
       try {
         this.isDisablePlay = true;
         this.toggleRecord()
-        this.media.startRecord();
+        //this.media.startRecord();
       }
       catch (e) {
         this.showToast('Could not start recording!');
@@ -348,7 +344,7 @@ import { MediaPlugin } from 'ionic-native';
       try {
         this.isDisablePlay = false;
         this.toggleRecord()
-        this.media.stopRecord();
+        //this.media.stopRecord();
       }
       catch (e) {
         this.showToast('Could not stop recording.');
@@ -359,7 +355,7 @@ import { MediaPlugin } from 'ionic-native';
       try {
         this.isDisableRecord = true;
         this.togglePlay()
-        this.media.play();
+        //this.media.play();
       }
       catch (e) {
         this.showToast('Could not play recording.');
@@ -370,8 +366,8 @@ import { MediaPlugin } from 'ionic-native';
       try {
         this.isDisableRecord = false;
         this.togglePlay()
-        this.media.stop();
-        this.media.release();
+        // this.media.stop();
+        // this.media.release();
       }
       catch (e) {
         this.showToast('Could not stop playing recording.');

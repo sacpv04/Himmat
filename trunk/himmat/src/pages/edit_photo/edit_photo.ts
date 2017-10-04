@@ -39,7 +39,7 @@ export class EditPhoto implements AfterViewInit{
         'minWidth': 2,
         'canvasWidth': window.screen.width,
         'canvasHeight': window.screen.height,
-        'penColor': '#666a73'
+        'penColor': '#000'
       };
       
       return options;     
@@ -73,20 +73,11 @@ export class EditPhoto implements AfterViewInit{
     this.signaturePad.clear();
   }
 
-  private DisplayMessage(msg: string){
-    this.toastCtrl.create({
-        message: msg,
-        position: 'bottom',
-        duration: 20000
-    }).present();
-  }
-
   savePhoto(){
     this.content = this.signaturePad.toDataURL();
     var patient = this.params.get('patient');
-    let photoID = 'photo191025';// + //patient.id;
+    let photoID = (patient.id == undefined) ? 'photo:unknow_id' : 'photo' + patient.id;
     this.storage.set(photoID, this.content);
-    this.events.publish('photo:saved', photoID);
     this.signaturePad.clear();
     this.navCtrl.push(DetailsPage, {item: patient});
   }
@@ -102,7 +93,6 @@ export class EditPhoto implements AfterViewInit{
   }
 
   clearContent(){
-      //this.DisplayMessage('clear');
     this.signaturePad.clear();
     this.setBackgroundImage(this.params.data.base64Image);
   }
