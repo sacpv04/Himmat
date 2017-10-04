@@ -20,6 +20,7 @@ import { SignaturePadModule } from 'angular2-signaturepad';
 import { IonicStorageModule } from '@ionic/storage';
 import { CameraPreview } from '@ionic-native/camera-preview';
 import { Diagnostic } from '@ionic-native/diagnostic';
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { Diagnostic } from '@ionic-native/diagnostic';
     BarcodeScanner,
     Diagnostic,
     CameraPreview,
+    SpeechRecognition,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

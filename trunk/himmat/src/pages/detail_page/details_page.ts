@@ -10,6 +10,10 @@ import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Patient } from '../services/PatientApi';
 
+import { ToastController } from 'ionic-angular';
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
+import { ChangeDetectorRef } from '@angular/core';
+
 @Component({
     selector: 'detail-page',
     templateUrl: 'details_page.html',
@@ -28,6 +32,9 @@ import { Patient } from '../services/PatientApi';
       private patientAPI: Patient,
       private alertCtrl: AlertController,
       public storage: Storage,
+      private speechRecognition: SpeechRecognition,
+      private cd: ChangeDetectorRef,
+      public toastCtrl: ToastController
     ) {
       var item = params.data.item;
       var sexe : string;
@@ -151,7 +158,43 @@ import { Patient } from '../services/PatientApi';
       this.nav.push(PhotoRecording, info);
     }
 
+    ionViewDidEnter() {
+      this.speechRecognition.hasPermission().then((hasPermission: boolean) => {
+        if (!hasPermission) {
+          this.speechRecognition.requestPermission().then(
+            () => console.log('Granted'),
+            () => this.showToast('Denied')
+          );
+        }
+      });
+  
+      //this.media = new MediaPlugin('recording.wav');
+    }
 
+    showToast(messageString: string) {
+      const toast = this.toastCtrl.create({
+        message: messageString,
+        duration: 2000,
+        position: 'bottom'
+      });
+  
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+      });
+  
+      toast.present();
+    }
+
+    speechToTextPatientName() {
+      let options = {
+        language: 'en-US'
+      };
+  
+      this.speechRecognition.startListening(options).subscribe(matches => {
+        this.cd.detectChanges();
+        this.patient.name = matches[0];
+      });
+    }
 
 }
 
