@@ -66,7 +66,10 @@
 
     <ion-item>
         <ion-label color="primary">Heathcare ID</ion-label>
-        <ion-input type="text" [(ngModel)]="patient.heathcareid"></ion-input>
+        <ion-input type="text" [(ngModel)] = "patient.heathcareid"></ion-input>
+        <button ion-button item-end (click)="scanQRCode()">
+            <ion-icon name="qr-scanner"></ion-icon>
+        </button>
     </ion-item>
 
     <ion-item-group radio-group [(ngModel)]="patient.severity">
