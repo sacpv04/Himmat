@@ -1,9 +1,12 @@
 <ion-header align-title="center">
-    <ion-navbar color="header-color">
+    <ion-navbar color="header-color" (click)="goBack()">
         <ion-title>
             {{ patient.name }}
         </ion-title>
         <ion-buttons right>
+            <button ion-button icon-only item-end (click)="showPrompt()">
+              <ion-icon name="calculator"></ion-icon>
+            </button>
             <button ion-button icon-only item-end (click)="addPatient()">
               <ion-icon name="checkmark"></ion-icon>
             </button>
@@ -14,15 +17,26 @@
 <ion-content padding>
     <ion-item>
         <ion-label color="primary">Patient # (QR)</ion-label>
-        <ion-input type="text" [(ngModel)] = "patient.id"></ion-input>
+        <ion-input type="text" [(ngModel)]="patient.id"></ion-input>
         <button ion-button item-end (click)="scanQRCode()">
             <ion-icon name="qr-scanner"></ion-icon>
         </button>
     </ion-item>
 
     <ion-item>
+        <ion-label color="primary">Symptom</ion-label>
+        <ion-input type="text" [(ngModel)]="patient.symptom"></ion-input>
+        <!-- <button ion-button class="no-boder-icon" item-end color="grey" outline icon-only>
+            <ion-icon name="create"></ion-icon>
+            </button>
+        <button ion-button class="no-boder-icon" item-end color="grey" outline icon-only (click)="speechToTextPatientName()">
+            <ion-icon name="mic"></ion-icon>
+        </button> -->
+    </ion-item>
+
+    <ion-item>
         <ion-label color="primary">Name</ion-label>
-        <ion-input type="text" [(ngModel)] = "patient.name"></ion-input>
+        <ion-input type="text" [(ngModel)]="patient.name"></ion-input>
         <button ion-button class="no-boder-icon" item-end color="grey" outline icon-only>
             <ion-icon name="create"></ion-icon>
         </button>
@@ -39,13 +53,13 @@
         </ion-col>
         <ion-col class="gender" col-4>
             <ion-item class="no-boder-icon">
-                <ion-radio class="radio-marin" value="male" item-left></ion-radio>
+                <ion-radio class="radio-marin" value="Male" item-left></ion-radio>
                 <ion-label class="no-marin">Male</ion-label>
             </ion-item>
         </ion-col>
         <ion-col class="gender" col-5>
             <ion-item>
-                <ion-radio class="radio-marin" value="female" item-left></ion-radio>
+                <ion-radio class="radio-marin" value="Female" item-left></ion-radio>
                 <ion-label class="no-marin">Female</ion-label>
             </ion-item>
         </ion-col>
@@ -53,20 +67,23 @@
 
     <ion-item>
         <ion-label color="primary">Age</ion-label>
+        <ion-input type="number" [(ngModel)]="patient.age"></ion-input>
         <ion-buttons end>
             <button ion-button item-end color="grey" clear icon-only>
                 <ion-icon name="create"></ion-icon>
             </button>
             <button ion-button item-end color="grey" clear icon-only>
-                    <ion-icon name="mic"></ion-icon>
-                </button>
+                <ion-icon name="mic"></ion-icon>
+            </button>
         </ion-buttons>
-        <ion-input type="number" [(ngModel)] = "patient.age"></ion-input>
     </ion-item>
 
     <ion-item>
         <ion-label color="primary">Heathcare ID</ion-label>
-        <ion-input type="text" [(ngModel)] = "patient.heathcareid"></ion-input>
+        <ion-input type="text" [(ngModel)]="patient.heathcareid"></ion-input>
+        <button ion-button item-end (click)="scanQRCode()">
+            <ion-icon name="qr-scanner"></ion-icon>
+        </button>
     </ion-item>
 
     <ion-item-group radio-group [(ngModel)]="patient.severity">
@@ -106,7 +123,7 @@
     </ion-item>
     <ion-item>
         <ion-label>Blood type</ion-label>
-        <ion-input type="text"[(ngModel)]="patient.bloodtype"></ion-input>
+        <ion-input type="text" [(ngModel)]="patient.bloodtype"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label>Surgery history</ion-label>
@@ -120,9 +137,9 @@
     <ion-item>
         <ion-label item-start>Quick note:</ion-label>
 
-        <button ion-button item-start>
+        <button ion-button item-start (click)="speechToTextQuickNote()">
                 <ion-icon name="mic"></ion-icon>
-            </button>
+        </button>
 
         <button ion-button item-start (click)="openPhotoRecording()"> 
             <ion-icon name="camera"></ion-icon>
@@ -130,15 +147,20 @@
 
         <button ion-button item-start>
                 <ion-icon name="create" (click)="goHandWrite()"></ion-icon>
-            </button>
+        </button>
 
         <button ion-button item-start (click)="goQRCode()">
             <ion-icon name="skip-forward"></ion-icon>
         </button>
 
+        <button ion-button item-start (click) = "doRecord()" [disabled]="isDisRecord" [color]="isRecording ? 'danger' : '#528D80'"><ion-icon [name]="isRecording ? 'square' : 'recording'"></ion-icon></button>
+        <button ion-button item-start (click) = "doPlay()" [disabled]="isDisPlay" [color]="isPlaying ? 'danger' : '#528D80'"><ion-icon [name]="isPlaying ? 'square' : 'play'"></ion-icon></button>
     </ion-item>
     <ion-item>
-        <ion-label>Mental illness
+        <ion-textarea [value]="patient.quick_note" rows=10 autosize></ion-textarea>
+    </ion-item>
+    <ion-item>
+        <ion-label *ngIf="signatureImage">
             <!-- <img [src]="signature"> -->
             <img [src]="photoCaptured" >
         </ion-label>

@@ -13,6 +13,7 @@ import { Patient } from '../services/PatientApi';
 import { ToastController } from 'ionic-angular';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { ChangeDetectorRef } from '@angular/core';
+import { MediaPlugin } from 'ionic-native';
 
 @Component({
     selector: 'detail-page',
@@ -25,7 +26,13 @@ import { ChangeDetectorRef } from '@angular/core';
     isShowPhoto = false;
     private patients = []; 
     items:any = [];
-    public signatureImage : any;
+    public signatureImage = false;
+    media: MediaPlugin;
+    isRecording = false;
+    isPlaying = false;
+    isDisRecord = false;
+    isDisPlay = true;
+
 
     ionViewWillEnter(){
              //Subcribe photo image
@@ -53,7 +60,8 @@ import { ChangeDetectorRef } from '@angular/core';
   
       this.events.subscribe("imageName", (imageName) => {
         this.storage.get(imageName).then((data) => {
-          this.signature = data;         
+          this.signature = data;
+          this.signatureImage = true;         
         });
       });
 
@@ -68,8 +76,10 @@ import { ChangeDetectorRef } from '@angular/core';
           this.isShowPhoto = false;
         }
     });
-      this.storage.get(this.patient.name).then((data) => {
-        this.signature = data;        
+      this.storage.get(this.patient.id).then((data) => {
+        console.log(this.patient.id);
+        this.signature = data;
+        this.signatureImage = true;        
       });
       // create data for scan code
       this.patientAPI.getPartients().then(res => {
@@ -77,15 +87,20 @@ import { ChangeDetectorRef } from '@angular/core';
         this.items.entry.forEach(element => {
           this.patients.push(element.resource);
         });            
-      });
+      });      
     }
     goQRCode() {
       this.nav.push(QRCode);
     }
     goHandWrite() {
-      //console.log("ID: " + this.patient.id);
-      console.log("NAME: " + this.patient.name);
-      this.nav.push(HandWrite, {item: this.patient.name});
+      if (this.patient.id != undefined) {
+        console.log("NAME: " + this.patient.id);
+        this.nav.push(HandWrite, {item: this.patient.id});
+      } else {
+       // this.showToast("Please scan QR code");
+        this.nav.push(HandWrite, {item: this.patient.id});
+        
+      }
     }
     scanQRCode() {
       this.barcodeScanner.scan().then((barcodeData) => {                
@@ -120,6 +135,11 @@ import { ChangeDetectorRef } from '@angular/core';
       });
       alert.present();
     }
+
+    goBack() {
+      this.nav.pop();
+    }
+    
 
     addPatient() {
       if (this.patient.heathcareid === "" || this.patient.heathcareid === undefined) {
@@ -171,9 +191,9 @@ import { ChangeDetectorRef } from '@angular/core';
                 break;          
             default:
                 this.patient.color = "oxygen";
-        }          
+        }               
         this.events.publish('users:created', this.patient);
-        this.presentAlert("Patient Saving", "New Patient is saving successful !", ["OK"]);        
+        this.nav.first; 
       }
     }
 
@@ -186,16 +206,19 @@ import { ChangeDetectorRef } from '@angular/core';
     }
 
     ionViewDidEnter() {
-      // this.speechRecognition.hasPermission().then((hasPermission: boolean) => {
-      //   if (!hasPermission) {
-      //     this.speechRecognition.requestPermission().then(
-      //       () => console.log('Granted'),
-      //       () => this.showToast('Denied')
-      //     );
-      //   }
-      // });
-  
-      //this.media = new MediaPlugin('recording.wav');
+      //this.getPermissionSpeechRecognition();
+      this.media = new MediaPlugin('recording.wav');
+    }
+
+    getPermissionSpeechRecognition(){
+      this.speechRecognition.hasPermission().then((hasPermission: boolean) => {
+        if (!hasPermission) {
+          this.speechRecognition.requestPermission().then(
+            () => console.log('Granted'),
+            () => this.showToast('Denied')
+          );
+        }
+      });
     }
 
     showToast(messageString: string) {
@@ -216,6 +239,8 @@ import { ChangeDetectorRef } from '@angular/core';
       let options = {
         language: 'en-US'
       };
+
+      this.getPermissionSpeechRecognition();
   
       this.speechRecognition.startListening(options).subscribe(matches => {
         this.cd.detectChanges();
@@ -231,7 +256,159 @@ import { ChangeDetectorRef } from '@angular/core';
         }).present();
     }
 
+    speechToTextQuickNote() {
+      let options = {
+        language: 'en-US'
+      };
+
+      this.getPermissionSpeechRecognition();
+  
+      this.speechRecognition.startListening(options).subscribe(matches => {
+        this.cd.detectChanges();
+        if(!this.patient.quick_note){
+          this.patient.quick_note = "";
+        }
+        this.patient.quick_note += matches[0] + '\n';
+      });
+    }
+
+    // this part belong to quick input
+    showPrompt() {
+      let prompt = this.alertCtrl.create({
+        title: 'Quick input',
+        message: "Enter {name} {age} M/F {symptom}",
+        inputs: [
+          {
+            name: 'input',
+            placeholder: 'Input Patern'
+          },
+        ],
+        buttons: [
+          {
+            text: 'Cancel',
+            handler: data => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'Save',
+            handler: data => {
+              console.log('Saved clicked');
+              this.inputAnalysic(data.input);
+            }
+          }
+        ]
+      });
+      prompt.present();
+    }
+
+    inputAnalysic(inputTexts :string) {      
+      var arrayOfStrings = inputTexts.split(" ");
+      var name = arrayOfStrings[0];
+
+      for (var index = 1; index < arrayOfStrings.length; index++) {
+        var text = arrayOfStrings[index];
+        var regex=/^[0-9]+$/;
+        if (text.match(regex)){         
+          this.patient.name = name;
+          this.patient.age = text;
+          var gender = arrayOfStrings[index+1];
+          if (gender==='m' || gender === 'M') {
+            this.patient.gender = "Male";
+          } else {
+            this.patient.gender = "Female"
+          }
+          var symptom = arrayOfStrings[index+2];
+          for (var i = index+3; i < arrayOfStrings.length; i++) {
+            var element = arrayOfStrings[i];
+            symptom +=" "+ element;
+          }
+          this.patient.symptom = symptom;
+          break;
+        } else {
+          name+=" " + text;
+        }
+      }
+    }
+
+    // Function for Record and Play/Stop audio
+    startRecording() {
+      try {
+        this.isDisPlay = true;
+        this.media.startRecord();
+        this.isRecording = true;
+      }
+      catch (e) {
+        this.showToast('Could not start recording!');
+      }
+    }
+  
+    stopRecording() {
+      try {
+        this.isDisPlay = false;
+        this.media.stopRecord();
+        this.isRecording = false;
+      }
+      catch (e) {
+        this.showToast('Could not stop recording.');
+      }
+    }
+  
+    startPlayBack() {
+      try {
+        this.isDisRecord = true;
+        this.media.play();
+        this.isPlaying = true;
+      }
+      catch (e) {
+        this.showToast('Could not play recording.');
+      }
+    }
+  
+    stopPlayBack() {
+      try {
+        this.isDisRecord = false;
+        this.media.stop();
+        this.isPlaying = false;
+      }
+      catch (e) {
+        this.showToast('Could not stop playing recording.');
+      }
+    } 
+    toggleRecord(){
+      this.isRecording = !this.isRecording;
+    }
+    togglePlay(){
+      this.isPlaying = !this.isPlaying;
+    }
+    doRecord()
+    {
+      if(!this.isRecording)
+      {
+        this.startRecording();
+        this.toggleRecord()
+      }
+      else{
+        this.stopRecording();
+        this.toggleRecord()
+      }
+    }
+  
+    doPlay()
+    {
+      if(!this.isPlaying)
+      {
+        this.startPlayBack();
+        this.togglePlay()
+      }
+      else{
+        this.stopPlayBack();
+        this.togglePlay()
+      }
+    }
+
 }
+
 
 class PatientModel {
   id: string;
@@ -249,4 +426,5 @@ class PatientModel {
   arrived:string;
   color:string;
   display:boolean; 
+  symptom: string;
 }
