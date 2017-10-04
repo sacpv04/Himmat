@@ -30,8 +30,8 @@ import { MediaPlugin } from 'ionic-native';
     media: MediaPlugin;
     isRecording = false;
     isPlaying = false;
-    isDisRecord = false;
-    isDisPlay = true;
+    isDisableRecord = false;
+    isDisablePlay = true;
 
 
     ionViewWillEnter(){
@@ -334,9 +334,9 @@ import { MediaPlugin } from 'ionic-native';
     // Function for Record and Play/Stop audio
     startRecording() {
       try {
-        this.isDisPlay = true;
+        this.isDisablePlay = true;
+        this.toggleRecord()
         this.media.startRecord();
-        this.isRecording = true;
       }
       catch (e) {
         this.showToast('Could not start recording!');
@@ -345,9 +345,9 @@ import { MediaPlugin } from 'ionic-native';
   
     stopRecording() {
       try {
-        this.isDisPlay = false;
+        this.isDisablePlay = false;
+        this.toggleRecord()
         this.media.stopRecord();
-        this.isRecording = false;
       }
       catch (e) {
         this.showToast('Could not stop recording.');
@@ -356,9 +356,9 @@ import { MediaPlugin } from 'ionic-native';
   
     startPlayBack() {
       try {
-        this.isDisRecord = true;
+        this.isDisableRecord = true;
+        this.togglePlay()
         this.media.play();
-        this.isPlaying = true;
       }
       catch (e) {
         this.showToast('Could not play recording.');
@@ -367,9 +367,9 @@ import { MediaPlugin } from 'ionic-native';
   
     stopPlayBack() {
       try {
-        this.isDisRecord = false;
+        this.isDisableRecord = false;
+        this.togglePlay()
         this.media.stop();
-        this.isPlaying = false;
       }
       catch (e) {
         this.showToast('Could not stop playing recording.');
@@ -386,11 +386,9 @@ import { MediaPlugin } from 'ionic-native';
       if(!this.isRecording)
       {
         this.startRecording();
-        this.toggleRecord()
       }
       else{
         this.stopRecording();
-        this.toggleRecord()
       }
     }
   
@@ -399,11 +397,9 @@ import { MediaPlugin } from 'ionic-native';
       if(!this.isPlaying)
       {
         this.startPlayBack();
-        this.togglePlay()
       }
       else{
         this.stopPlayBack();
-        this.togglePlay()
       }
     }
 
