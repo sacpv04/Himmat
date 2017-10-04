@@ -64,7 +64,7 @@ import { MediaPlugin } from 'ionic-native';
         this.items.entry.forEach(element => {
           this.patients.push(element.resource);
         });            
-      });
+      });      
     }
     goQRCode() {
       this.nav.push(QRCode);
@@ -198,16 +198,19 @@ import { MediaPlugin } from 'ionic-native';
     }
 
     ionViewDidEnter() {
-      // this.speechRecognition.hasPermission().then((hasPermission: boolean) => {
-      //   if (!hasPermission) {
-      //     this.speechRecognition.requestPermission().then(
-      //       () => console.log('Granted'),
-      //       () => this.showToast('Denied')
-      //     );
-      //   }
-      // });
-  
+      //this.getPermissionSpeechRecognition();
       //this.media = new MediaPlugin('recording.wav');
+    }
+
+    getPermissionSpeechRecognition(){
+      this.speechRecognition.hasPermission().then((hasPermission: boolean) => {
+        if (!hasPermission) {
+          this.speechRecognition.requestPermission().then(
+            () => console.log('Granted'),
+            () => this.showToast('Denied')
+          );
+        }
+      });
     }
 
     showToast(messageString: string) {
@@ -228,6 +231,8 @@ import { MediaPlugin } from 'ionic-native';
       let options = {
         language: 'en-US'
       };
+
+      this.getPermissionSpeechRecognition();
   
       this.speechRecognition.startListening(options).subscribe(matches => {
         this.cd.detectChanges();
@@ -239,9 +244,14 @@ import { MediaPlugin } from 'ionic-native';
       let options = {
         language: 'en-US'
       };
+
+      this.getPermissionSpeechRecognition();
   
       this.speechRecognition.startListening(options).subscribe(matches => {
         this.cd.detectChanges();
+        if(!this.patient.quick_note){
+          this.patient.quick_note = "";
+        }
         this.patient.quick_note += matches[0] + '\n';
       });
       

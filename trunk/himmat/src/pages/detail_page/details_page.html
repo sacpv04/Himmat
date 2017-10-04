@@ -152,8 +152,7 @@
         </button> -->
     </ion-item>
     <ion-item>
-        <ion-textarea [value]="patient.quick_note"></ion-textarea>
-        <!-- <p style="border-bottom:1px solid rgba(0,0,0,.4); padding-bottom:10px">{{patient.quick_note}}</p> -->
+        <ion-textarea [value]="patient.quick_note" rows=10></ion-textarea>
     </ion-item>
     <ion-item>
         <ion-label *ngIf="signatureImage">
