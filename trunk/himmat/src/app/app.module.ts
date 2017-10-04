@@ -21,6 +21,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { CameraPreview } from '@ionic-native/camera-preview';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
+import { Autosize } from 'ionic2-autosize';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition';
     QRCode,
     HandWrite,
     PhotoRecording,
-    EditPhoto
+    EditPhoto,
+    Autosize
   ],
   imports: [
     BrowserModule,

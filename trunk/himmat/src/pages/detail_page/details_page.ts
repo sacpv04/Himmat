@@ -28,7 +28,12 @@ import { MediaPlugin } from 'ionic-native';
     playBack = false;
     recording = false;
     media: MediaPlugin;
+<<<<<<< HEAD
 
+=======
+    stopBack = false;
+    eButton = false;
+>>>>>>> 6dd5e4ff617f67e194b57b17aa3243f5c3c1531b
     constructor(
       public nav: NavController, 
       params: NavParams, 
@@ -65,7 +70,7 @@ import { MediaPlugin } from 'ionic-native';
         this.items.entry.forEach(element => {
           this.patients.push(element.resource);
         });            
-      });
+      });      
     }
     goQRCode() {
       this.nav.push(QRCode);
@@ -199,16 +204,19 @@ import { MediaPlugin } from 'ionic-native';
     }
 
     ionViewDidEnter() {
-      // this.speechRecognition.hasPermission().then((hasPermission: boolean) => {
-      //   if (!hasPermission) {
-      //     this.speechRecognition.requestPermission().then(
-      //       () => console.log('Granted'),
-      //       () => this.showToast('Denied')
-      //     );
-      //   }
-      // });
-  
-      //this.media = new MediaPlugin('recording.wav');
+      //this.getPermissionSpeechRecognition();
+      this.media = new MediaPlugin('recording.wav');
+    }
+
+    getPermissionSpeechRecognition(){
+      this.speechRecognition.hasPermission().then((hasPermission: boolean) => {
+        if (!hasPermission) {
+          this.speechRecognition.requestPermission().then(
+            () => console.log('Granted'),
+            () => this.showToast('Denied')
+          );
+        }
+      });
     }
 
     showToast(messageString: string) {
@@ -229,6 +237,8 @@ import { MediaPlugin } from 'ionic-native';
       let options = {
         language: 'en-US'
       };
+
+      this.getPermissionSpeechRecognition();
   
       this.speechRecognition.startListening(options).subscribe(matches => {
         this.cd.detectChanges();
@@ -240,13 +250,16 @@ import { MediaPlugin } from 'ionic-native';
       let options = {
         language: 'en-US'
       };
+
+      this.getPermissionSpeechRecognition();
   
       this.speechRecognition.startListening(options).subscribe(matches => {
         this.cd.detectChanges();
+        if(!this.patient.quick_note){
+          this.patient.quick_note = "";
+        }
         this.patient.quick_note += matches[0] + '\n';
       });
-      
-      // this.patient.quick_note = "When you create an account, we remember exactly what you've read, so you always come right back where you left off. You also get notifications, here and via email, whenever new posts are made. And you can like posts to share the love";
     }
 
     // this part belong to quick input
@@ -286,7 +299,7 @@ import { MediaPlugin } from 'ionic-native';
       for (var index = 1; index < arrayOfStrings.length; index++) {
         var text = arrayOfStrings[index];
         var regex=/^[0-9]+$/;
-        if (text.match(regex)){          
+        if (text.match(regex)){         
           this.patient.name = name;
           this.patient.age = text;
           var gender = arrayOfStrings[index+1];
@@ -312,6 +325,7 @@ import { MediaPlugin } from 'ionic-native';
     startRecording() {
       try {
         this.recording = true;
+        this.playBack  = false;
         this.media.startRecord();
       }
       catch (e) {
@@ -332,7 +346,9 @@ import { MediaPlugin } from 'ionic-native';
   
     startPlayBack() {
       try {
-        this.playBack = true;
+        this.stopBack = true;
+        this.playBack = false;
+        this.eButton = true;
         this.media.play();
       }
       catch (e) {
@@ -342,7 +358,9 @@ import { MediaPlugin } from 'ionic-native';
   
     stopPlayBack() {
       try {
-        this.playBack = false;
+        this.stopBack = false;
+        this.playBack = true;
+        this.eButton = false;
         this.media.stop();
       }
       catch (e) {

@@ -152,22 +152,21 @@
         <button ion-button item-start (click)="goQRCode()">
             <ion-icon name="skip-forward"></ion-icon>
         </button>
-        <!-- <button ion-button item-start (click)="startRecording()">
+        <!-- <button ion-button item-start (click)="startRecording()" [hidden]="recording" [disabled]="eButton">
             <ion-icon name="recording"></ion-icon>
         </button>
-        <button ion-button item-start (click)="stopRecording()">
+        <button ion-button item-start (click)="stopRecording()" [hidden]="!recording">
             <ion-icon name="square"></ion-icon>
         </button>
-        <button ion-button item-start (click)="startPlayBack()">
+        <button ion-button item-start (click)="startPlayBack()" [hidden]="!playBack">
             <ion-icon name="play"></ion-icon>
         </button>
-        <button ion-button item-start (click)="stopPlayBack()">
+        <button ion-button item-start (click)="stopPlayBack()" [hidden]="!stopBack">
             <ion-icon name="square"></ion-icon>
         </button> -->
     </ion-item>
     <ion-item>
-        <ion-textarea [value]="patient.quick_note"></ion-textarea>
-        <!-- <p style="border-bottom:1px solid rgba(0,0,0,.4); padding-bottom:10px">{{patient.quick_note}}</p> -->
+        <ion-textarea [value]="patient.quick_note" rows=10 autosize></ion-textarea>
     </ion-item>
     <ion-item>
         <ion-label *ngIf="signatureImage">
