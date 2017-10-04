@@ -28,6 +28,8 @@ import { MediaPlugin } from 'ionic-native';
     playBack = false;
     recording = false;
     media: MediaPlugin;
+    stopBack = false;
+    eButton = false;
     constructor(
       public nav: NavController, 
       params: NavParams, 
@@ -260,6 +262,7 @@ import { MediaPlugin } from 'ionic-native';
     startRecording() {
       try {
         this.recording = true;
+        this.playBack  = false;
         this.media.startRecord();
       }
       catch (e) {
@@ -280,7 +283,9 @@ import { MediaPlugin } from 'ionic-native';
   
     startPlayBack() {
       try {
-        this.playBack = true;
+        this.stopBack = true;
+        this.playBack = false;
+        this.eButton = true;
         this.media.play();
       }
       catch (e) {
@@ -290,7 +295,9 @@ import { MediaPlugin } from 'ionic-native';
   
     stopPlayBack() {
       try {
-        this.playBack = false;
+        this.stopBack = false;
+        this.playBack = true;
+        this.eButton = false;
         this.media.stop();
       }
       catch (e) {

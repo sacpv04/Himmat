@@ -138,16 +138,16 @@
         <button ion-button item-start (click)="goQRCode()">
             <ion-icon name="skip-forward"></ion-icon>
         </button>
-        <!-- <button ion-button item-start (click)="startRecording()">
+        <!-- <button ion-button item-start (click)="startRecording()" [hidden]="recording" [disabled]="eButton">
             <ion-icon name="recording"></ion-icon>
         </button>
-        <button ion-button item-start (click)="stopRecording()">
+        <button ion-button item-start (click)="stopRecording()" [hidden]="!recording">
             <ion-icon name="square"></ion-icon>
         </button>
-        <button ion-button item-start (click)="startPlayBack()">
+        <button ion-button item-start (click)="startPlayBack()" [hidden]="!playBack">
             <ion-icon name="play"></ion-icon>
         </button>
-        <button ion-button item-start (click)="stopPlayBack()">
+        <button ion-button item-start (click)="stopPlayBack()" [hidden]="!stopBack">
             <ion-icon name="square"></ion-icon>
         </button> -->
     </ion-item>
