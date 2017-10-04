@@ -14,6 +14,8 @@ import { ToastController } from 'ionic-angular';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { ChangeDetectorRef } from '@angular/core';
 
+import { MediaPlugin } from 'ionic-native';
+
 @Component({
     selector: 'detail-page',
     templateUrl: 'details_page.html',
@@ -24,6 +26,10 @@ import { ChangeDetectorRef } from '@angular/core';
     private patients = []; 
     items:any = [];
     public signatureImage : any;
+    playBack = false;
+    recording = false;
+    media: MediaPlugin;
+
     constructor(
       public nav: NavController, 
       params: NavParams, 
@@ -172,7 +178,7 @@ import { ChangeDetectorRef } from '@angular/core';
       //   }
       // });
   
-      //this.media = new MediaPlugin('recording.wav');
+      this.media = new MediaPlugin('recording.wav');
     }
 
     showToast(messageString: string) {
@@ -211,6 +217,47 @@ import { ChangeDetectorRef } from '@angular/core';
       });
       
       // this.patient.quick_note = "When you create an account, we remember exactly what you've read, so you always come right back where you left off. You also get notifications, here and via email, whenever new posts are made. And you can like posts to share the love";
+    }
+    // Function for Record and Play/Stop audio
+    startRecording() {
+      try {
+        this.recording = true;
+        this.media.startRecord();
+      }
+      catch (e) {
+        this.showToast('Could not start recording!');
+      }
+    }
+  
+    stopRecording() {
+      try {
+        this.recording = false;
+        this.playBack = true;
+        this.media.stopRecord();
+      }
+      catch (e) {
+        this.showToast('Could not stop recording.');
+      }
+    }
+  
+    startPlayBack() {
+      try {
+        this.playBack = true;
+        this.media.play();
+      }
+      catch (e) {
+        this.showToast('Could not play recording.');
+      }
+    }
+  
+    stopPlayBack() {
+      try {
+        this.playBack = false;
+        this.media.stop();
+      }
+      catch (e) {
+        this.showToast('Could not stop playing recording.');
+      }
     }
 
 }
