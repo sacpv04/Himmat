@@ -44,6 +44,7 @@
         "ionic-angular": "3.6.1",
         "ionic-native": "^2.9.0",
         "ionic-plugin-keyboard": "^2.2.1",
+        "ionic2-autosize": "^1.1.2",
         "ionicons": "3.0.0",
         "ngx-barcode": "^0.2.4",
         "ngx-qrcode2": "0.0.5",
