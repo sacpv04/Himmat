@@ -135,10 +135,14 @@
         <button ion-button item-start (click)="goQRCode()">
             <ion-icon name="skip-forward"></ion-icon>
         </button>
+
     </ion-item>
     <ion-item>
         <ion-label>Mental illness
-            <img [src]="signature">
+            <!-- <img [src]="signature"> -->
+            <img [src]="photoCaptured" >
         </ion-label>
+       
     </ion-item>
+    
 </ion-content>

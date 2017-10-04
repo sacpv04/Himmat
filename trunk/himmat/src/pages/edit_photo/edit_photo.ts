@@ -57,21 +57,16 @@ export class EditPhoto implements AfterViewInit{
       image.src = img;
     }  
 
-  drawStart() {
-    this.isDrawing = true;
-  }
+    drawStart() {
+      this.isDrawing = true;
+    }
 
     drawCancel() {
       this.navCtrl.push(HomePage);
     }
 
     drawComplete() {
-      this.content = this.signaturePad.toDataURL();
-      this.storage.set(this.base64Image, this.content);
-      this.signaturePad.clear();
-      this.events.publish('imageName', this.base64Image);
-      console.log(this.base64Image);
-      this.navCtrl.pop();
+  
     }
 
   drawClear() {
@@ -88,10 +83,12 @@ export class EditPhoto implements AfterViewInit{
 
   savePhoto(){
     this.content = this.signaturePad.toDataURL();
-    this.storage.set('photo_note', this.content);
+    var patient = this.params.get('patient');
+    let photoID = 'photo191025';// + //patient.id;
+    this.storage.set(photoID, this.content);
+    this.events.publish('photo:saved', photoID);
     this.signaturePad.clear();
-    //this.navCtrl
-    this.goBack();
+    this.navCtrl.push(DetailsPage, {item: patient});
   }
 
   private goBack(){

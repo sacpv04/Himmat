@@ -4,7 +4,7 @@ import { NavController, AlertController } from 'ionic-angular';
 import { QRCode } from '../qrcode/qrcode';
 import { HandWrite } from '../handwrite/handwrite';
 import { PhotoRecording } from '../photo_recording/photo_recording';
-
+import { EditPhoto } from '../edit_photo/edit_photo';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
@@ -21,14 +21,22 @@ import { ChangeDetectorRef } from '@angular/core';
   export class DetailsPage {
     patient:any;   
     signature = '';
+    photoCaptured = '';
+    isShowPhoto = false;
     private patients = []; 
     items:any = [];
     public signatureImage : any;
+
+    ionViewWillEnter(){
+             //Subcribe photo image
+       
+    }
+
     constructor(
       public nav: NavController, 
       params: NavParams, 
       private barcodeScanner: BarcodeScanner,     
-      private events: Events,
+      public events: Events,
       private patientAPI: Patient,
       private alertCtrl: AlertController,
       public storage: Storage,
@@ -42,12 +50,24 @@ import { ChangeDetectorRef } from '@angular/core';
       } else {
         this.patient = item;
       } 
-      console.log(this.patient);   
+  
       this.events.subscribe("imageName", (imageName) => {
         this.storage.get(imageName).then((data) => {
           this.signature = data;         
         });
-      })
+      });
+
+      this.events.subscribe('photo:saved', (photo) => {       
+        if(photo != null || photo != undefined){            
+          this.storage.get("photo" + this.patient.id).then((pic) =>{
+              this.isShowPhoto = true;
+              console.log('xinh : ' + pic);
+              this.photoCaptured = pic;                
+          });
+        }else{
+          this.isShowPhoto = false;
+        }
+    });
       this.storage.get(this.patient.name).then((data) => {
         this.signature = data;        
       });
@@ -157,9 +177,12 @@ import { ChangeDetectorRef } from '@angular/core';
       }
     }
 
-    openPhotoRecording(){
-      var info = {patientID: this.patient.id};
-      this.nav.push(PhotoRecording, info);
+    openPhotoRecording(){     
+      this.nav.push(PhotoRecording, {patient: this.patient});
+    }
+
+    editPhoto(){
+      this.nav.push(EditPhoto);
     }
 
     ionViewDidEnter() {
@@ -198,6 +221,14 @@ import { ChangeDetectorRef } from '@angular/core';
         this.cd.detectChanges();
         this.patient.name = matches[0];
       });
+    }
+
+    private DisplayMessage(msg: string){
+        this.toastCtrl.create({
+            message: msg,
+            position: 'bottom',
+            duration: 3000
+        }).present();
     }
 
 }
