@@ -37,8 +37,12 @@ import { ChangeDetectorRef } from '@angular/core';
       public toastCtrl: ToastController
     ) {
       var item = params.data.item;
-      var sexe : string;
-      this.patient = new PatientModel();      
+      if (item === undefined) {
+        this.patient = new PatientModel(); 
+      } else {
+        this.patient = item;
+      } 
+      console.log(this.patient);   
       this.events.subscribe("imageName", (imageName) => {
         this.storage.get(imageName).then((data) => {
           this.signature = data;         
