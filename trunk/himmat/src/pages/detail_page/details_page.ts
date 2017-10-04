@@ -28,6 +28,7 @@ import { MediaPlugin } from 'ionic-native';
     playBack = false;
     recording = false;
     media: MediaPlugin;
+
     constructor(
       public nav: NavController, 
       params: NavParams, 
@@ -247,6 +248,66 @@ import { MediaPlugin } from 'ionic-native';
       
       // this.patient.quick_note = "When you create an account, we remember exactly what you've read, so you always come right back where you left off. You also get notifications, here and via email, whenever new posts are made. And you can like posts to share the love";
     }
+
+    // this part belong to quick input
+    showPrompt() {
+      let prompt = this.alertCtrl.create({
+        title: 'Quick input',
+        message: "Enter {name} {age} M/F {symptom}",
+        inputs: [
+          {
+            name: 'input',
+            placeholder: 'Input Patern'
+          },
+        ],
+        buttons: [
+          {
+            text: 'Cancel',
+            handler: data => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'Save',
+            handler: data => {
+              console.log('Saved clicked');
+              this.inputAnalysic(data.input);
+            }
+          }
+        ]
+      });
+      prompt.present();
+    }
+
+    inputAnalysic(inputTexts :string) {      
+      var arrayOfStrings = inputTexts.split(" ");
+      var name = arrayOfStrings[0];
+
+      for (var index = 1; index < arrayOfStrings.length; index++) {
+        var text = arrayOfStrings[index];
+        var regex=/^[0-9]+$/;
+        if (text.match(regex)){          
+          this.patient.name = name;
+          this.patient.age = text;
+          var gender = arrayOfStrings[index+1];
+          if (gender==='m' || gender === 'M') {
+            this.patient.gender = "Male";
+          } else {
+            this.patient.gender = "Female"
+          }
+          var symptom = arrayOfStrings[index+2];
+          for (var i = index+3; i < arrayOfStrings.length; i++) {
+            var element = arrayOfStrings[i];
+            symptom +=" "+ element;
+          }
+          this.patient.symptom = symptom;
+          break;
+        } else {
+          name+=" " + text;
+        }
+      }
+    }
+
     // Function for Record and Play/Stop audio
     startRecording() {
       try {
@@ -307,4 +368,5 @@ class PatientModel {
   arrived:string;
   color:string;
   display:boolean; 
+  symptom: string;
 }
