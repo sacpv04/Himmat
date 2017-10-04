@@ -79,7 +79,7 @@
     </ion-item>
 
     <ion-item>
-        <ion-label color="primary">Heathcare ID</ion-label>
+        <ion-label color="primary">NHS No</ion-label>
         <ion-input type="text" [(ngModel)]="patient.heathcareid"></ion-input>
         <button ion-button item-end (click)="scanQRCode()">
             <ion-icon name="qr-scanner"></ion-icon>
@@ -134,8 +134,8 @@
         <ion-input type="text" [(ngModel)]="patient.mental_illness"></ion-input>
     </ion-item>
 
-    <ion-item>
-        <ion-label item-start>Quick note:</ion-label>
+    <ion-item-divider>
+        <ion-label class="divider-text" color="primary" item-start>Quick note:</ion-label>
 
         <button ion-button item-start (click)="speechToTextQuickNote()">
                 <ion-icon name="mic"></ion-icon>
@@ -164,7 +164,7 @@
         <button ion-button item-start (click)="stopPlayBack()" [hidden]="!stopBack">
             <ion-icon name="square"></ion-icon>
         </button> -->
-    </ion-item>
+    </ion-item-divider>
     <ion-item>
         <ion-textarea [value]="patient.quick_note" rows=10 autosize></ion-textarea>
     </ion-item>
