@@ -14,7 +14,7 @@
 <ion-content padding>
     <ion-item>
         <ion-label color="primary">Patient # (QR)</ion-label>
-        <ion-input type="text" [(ngModel)] = "patient.id"></ion-input>
+        <ion-input type="text" [(ngModel)]="patient.id"></ion-input>
         <button ion-button item-end (click)="scanQRCode()">
             <ion-icon name="qr-scanner"></ion-icon>
         </button>
@@ -22,7 +22,7 @@
 
     <ion-item>
         <ion-label color="primary">Name</ion-label>
-        <ion-input type="text" [(ngModel)] = "patient.name"></ion-input>
+        <ion-input type="text" [(ngModel)]="patient.name"></ion-input>
         <button ion-button class="no-boder-icon" item-end color="grey" outline icon-only>
             <ion-icon name="create"></ion-icon>
         </button>
@@ -61,12 +61,12 @@
                     <ion-icon name="mic"></ion-icon>
                 </button>
         </ion-buttons>
-        <ion-input type="number" [(ngModel)] = "patient.age"></ion-input>
+        <ion-input type="number" [(ngModel)]="patient.age"></ion-input>
     </ion-item>
 
     <ion-item>
         <ion-label color="primary">Heathcare ID</ion-label>
-        <ion-input type="text" [(ngModel)] = "patient.heathcareid"></ion-input>
+        <ion-input type="text" [(ngModel)]="patient.heathcareid"></ion-input>
     </ion-item>
 
     <ion-item-group radio-group [(ngModel)]="patient.severity">
@@ -106,7 +106,7 @@
     </ion-item>
     <ion-item>
         <ion-label>Blood type</ion-label>
-        <ion-input type="text"[(ngModel)]="patient.bloodtype"></ion-input>
+        <ion-input type="text" [(ngModel)]="patient.bloodtype"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label>Surgery history</ion-label>
@@ -120,9 +120,9 @@
     <ion-item>
         <ion-label item-start>Quick note:</ion-label>
 
-        <button ion-button item-start>
+        <button ion-button item-start (click)="speechToTextQuickNote()">
                 <ion-icon name="mic"></ion-icon>
-            </button>
+        </button>
 
         <button ion-button item-start (click)="openPhotoRecording()"> 
             <ion-icon name="camera"></ion-icon>
@@ -130,11 +130,15 @@
 
         <button ion-button item-start>
                 <ion-icon name="create" (click)="goHandWrite()"></ion-icon>
-            </button>
+        </button>
 
         <button ion-button item-start (click)="goQRCode()">
             <ion-icon name="skip-forward"></ion-icon>
         </button>
+    </ion-item>
+    <ion-item>
+        <ion-textarea [value]="patient.quick_note"></ion-textarea>
+        <!-- <p style="border-bottom:1px solid rgba(0,0,0,.4); padding-bottom:10px">{{patient.quick_note}}</p> -->
     </ion-item>
     <ion-item>
         <ion-label>Mental illness

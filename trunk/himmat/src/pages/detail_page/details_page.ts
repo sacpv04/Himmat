@@ -200,6 +200,19 @@ import { ChangeDetectorRef } from '@angular/core';
       });
     }
 
+    speechToTextQuickNote() {
+      let options = {
+        language: 'en-US'
+      };
+  
+      this.speechRecognition.startListening(options).subscribe(matches => {
+        this.cd.detectChanges();
+        this.patient.quick_note += matches[0] + '\n';
+      });
+      
+      // this.patient.quick_note = "When you create an account, we remember exactly what you've read, so you always come right back where you left off. You also get notifications, here and via email, whenever new posts are made. And you can like posts to share the love";
+    }
+
 }
 
 class PatientModel {
