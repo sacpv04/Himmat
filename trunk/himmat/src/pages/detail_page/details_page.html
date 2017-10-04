@@ -152,8 +152,8 @@
         <button ion-button item-start (click)="goQRCode()">
             <ion-icon name="skip-forward"></ion-icon>
         </button>
-        <button ion-button full (click) = "doRecord()" [disabled]="isDisRecord" [color]="isRecording ? 'danger' : 'secondary'"><ion-icon [name]="isRecording ? 'square' : 'recording'"></ion-icon></button>
-        <button ion-button full (click)="doPlay()" [disabled]="isDisPlay" [color]="isPlaying ? 'danger' : 'secondary'"><ion-icon [name]="isPlaying ? 'square' : 'play'"></ion-icon></button>
+        <button ion-button item-start (click) = "doRecord()" [disabled]="isDisRecord" [color]="isRecording ? 'danger' : '#528D80'"><ion-icon [name]="isRecording ? 'square' : 'recording'"></ion-icon></button>
+        <button ion-button item-start (click) = "doPlay()" [disabled]="isDisPlay" [color]="isPlaying ? 'danger' : '#528D80'"><ion-icon [name]="isPlaying ? 'square' : 'play'"></ion-icon></button>
     </ion-item>
     <ion-item>
         <ion-textarea [value]="patient.quick_note" rows=10 autosize></ion-textarea>
