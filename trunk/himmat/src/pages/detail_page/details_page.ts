@@ -208,6 +208,7 @@ import { MediaPlugin } from 'ionic-native';
     ionViewDidEnter() {
       //this.getPermissionSpeechRecognition();
       this.media = new MediaPlugin('recording.wav');
+      
     }
 
     getPermissionSpeechRecognition(){
@@ -370,6 +371,7 @@ import { MediaPlugin } from 'ionic-native';
         this.isDisableRecord = false;
         this.togglePlay()
         this.media.stop();
+        this.media.release();
       }
       catch (e) {
         this.showToast('Could not stop playing recording.');
