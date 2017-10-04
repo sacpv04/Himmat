@@ -33,9 +33,7 @@ export class PhotoRecording{
                 }, (err) => {
                     
                 })
-            }
-                
-                
+            }   
             else{
                 //Request permission to access camera
                 this.diagnostic.requestCameraAuthorization(false).then((status) => {                    
@@ -57,8 +55,8 @@ export class PhotoRecording{
         });
     }
 
-    initializePreview(){
-        //TOTO: initial camera preview
+    private initializePreview(){
+        //Initial camera preview
         let cameraOptions: CameraPreviewOptions = {
             x: 0,
             y: 0,
@@ -80,17 +78,18 @@ export class PhotoRecording{
             height: window.screen.height,
             quality: 85
         };
-        this.cameraPreview.takePicture(pictureOpts).then((imageData) => {
-            
+        this.cameraPreview.takePicture(pictureOpts).then((imageData) => {            
             this.nav.push(EditPhoto, {base64Image: 'data:image/jpeg;base64,' + imageData,
-                                    patientID: this.params.data.patientID});
+                                    patient: this.params.data.patient});
         }, (err) => {
             this.DisplayMessage("TakePicture: " + err);
         })
     }
 
+    // function for test getting patient id
+    // should remove
     showInfo(){
-        this.DisplayMessage(this.params.data.patientID);
+        //this.DisplayMessage('Xinh chao: ' + this.params.get('patient'));
     }
 
     private DisplayMessage(msg: string){

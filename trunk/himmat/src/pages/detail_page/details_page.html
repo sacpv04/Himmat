@@ -1,5 +1,5 @@
 <ion-header align-title="center">
-    <ion-navbar color="header-color">
+    <ion-navbar color="header-color" (click)="goBack()">
         <ion-title>
             {{ patient.name }}
         </ion-title>
@@ -152,25 +152,20 @@
         <button ion-button item-start (click)="goQRCode()">
             <ion-icon name="skip-forward"></ion-icon>
         </button>
-        <!-- <button ion-button item-start (click)="startRecording()" [hidden]="recording" [disabled]="eButton">
-            <ion-icon name="recording"></ion-icon>
-        </button>
-        <button ion-button item-start (click)="stopRecording()" [hidden]="!recording">
-            <ion-icon name="square"></ion-icon>
-        </button>
-        <button ion-button item-start (click)="startPlayBack()" [hidden]="!playBack">
-            <ion-icon name="play"></ion-icon>
-        </button>
-        <button ion-button item-start (click)="stopPlayBack()" [hidden]="!stopBack">
-            <ion-icon name="square"></ion-icon>
-        </button> -->
+
+        <button ion-button item-start (click) = "doRecord()" [disabled]="isDisRecord" [color]="isRecording ? 'danger' : '#528D80'"><ion-icon [name]="isRecording ? 'square' : 'recording'"></ion-icon></button>
+        <button ion-button item-start (click) = "doPlay()" [disabled]="isDisPlay" [color]="isPlaying ? 'danger' : '#528D80'"><ion-icon [name]="isPlaying ? 'square' : 'play'"></ion-icon></button>
     </ion-item-divider>
+
     <ion-item>
         <ion-textarea [value]="patient.quick_note" rows=10 autosize></ion-textarea>
     </ion-item>
     <ion-item>
         <ion-label *ngIf="signatureImage">
-            <img [src]="signature">
+            <!-- <img [src]="signature"> -->
+            <img [src]="photoCaptured" >
         </ion-label>
+       
     </ion-item>
+    
 </ion-content>

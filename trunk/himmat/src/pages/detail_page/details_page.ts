@@ -4,7 +4,7 @@ import { NavController, AlertController } from 'ionic-angular';
 import { QRCode } from '../qrcode/qrcode';
 import { HandWrite } from '../handwrite/handwrite';
 import { PhotoRecording } from '../photo_recording/photo_recording';
-
+import { EditPhoto } from '../edit_photo/edit_photo';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
@@ -22,19 +22,28 @@ import { MediaPlugin } from 'ionic-native';
   export class DetailsPage {
     patient:any;   
     signature = '';
+    photoCaptured = '';
+    isShowPhoto = false;
     private patients = []; 
     items:any = [];
     public signatureImage = false;
-    playBack = false;
-    recording = false;
     media: MediaPlugin;
-    stopBack = false;
-    eButton = false;
+    isRecording = false;
+    isPlaying = false;
+    isDisRecord = false;
+    isDisPlay = true;
+
+
+    ionViewWillEnter(){
+             //Subcribe photo image
+       
+    }
+
     constructor(
       public nav: NavController, 
       params: NavParams, 
       private barcodeScanner: BarcodeScanner,     
-      private events: Events,
+      public events: Events,
       private patientAPI: Patient,
       private alertCtrl: AlertController,
       public storage: Storage,
@@ -48,13 +57,25 @@ import { MediaPlugin } from 'ionic-native';
       } else {
         this.patient = item;
       } 
-      console.log(this.patient);   
+  
       this.events.subscribe("imageName", (imageName) => {
         this.storage.get(imageName).then((data) => {
           this.signature = data;
           this.signatureImage = true;         
         });
-      })
+      });
+
+      this.events.subscribe('photo:saved', (photo) => {       
+        if(photo != null || photo != undefined){            
+          this.storage.get("photo" + this.patient.id).then((pic) =>{
+              this.isShowPhoto = true;
+              console.log('xinh : ' + pic);
+              this.photoCaptured = pic;                
+          });
+        }else{
+          this.isShowPhoto = false;
+        }
+    });
       this.storage.get(this.patient.id).then((data) => {
         console.log(this.patient.id);
         this.signature = data;
@@ -115,26 +136,8 @@ import { MediaPlugin } from 'ionic-native';
       alert.present();
     }
 
-    confirmCreate() {
-      const alert = this.alertCtrl.create({
-        title: 'Patient Saving',
-        message: 'New Patient is saving successful !',
-        buttons: [
-          {
-            text: 'Ok',
-            role: 'ok',
-            handler: () => {              
-              // this.nav.push(HomePage, {item: this.patient})
-              this.patient = new PatientModel();
-              this.patient.id = "";
-              this.patient.name = "";
-              this.patient.age = "";
-              this.patient.heathcareid = "";
-            }
-          }
-        ]
-      });
-      alert.present();
+    goBack() {
+      this.nav.pop();
     }
     
 
@@ -190,13 +193,16 @@ import { MediaPlugin } from 'ionic-native';
                 this.patient.color = "oxygen";
         }               
         this.events.publish('users:created', this.patient);
-        this.confirmCreate(); 
+        this.nav.first; 
       }
     }
 
-    openPhotoRecording(){
-      var info = {patientID: this.patient.id};
-      this.nav.push(PhotoRecording, info);
+    openPhotoRecording(){     
+      this.nav.push(PhotoRecording, {patient: this.patient});
+    }
+
+    editPhoto(){
+      this.nav.push(EditPhoto);
     }
 
     ionViewDidEnter() {
@@ -240,6 +246,14 @@ import { MediaPlugin } from 'ionic-native';
         this.cd.detectChanges();
         this.patient.name = matches[0];
       });
+    }
+
+    private DisplayMessage(msg: string){
+        this.toastCtrl.create({
+            message: msg,
+            position: 'bottom',
+            duration: 3000
+        }).present();
     }
 
     speechToTextQuickNote() {
@@ -320,9 +334,9 @@ import { MediaPlugin } from 'ionic-native';
     // Function for Record and Play/Stop audio
     startRecording() {
       try {
-        this.recording = true;
-        this.playBack  = false;
+        this.isDisPlay = true;
         this.media.startRecord();
+        this.isRecording = true;
       }
       catch (e) {
         this.showToast('Could not start recording!');
@@ -331,9 +345,9 @@ import { MediaPlugin } from 'ionic-native';
   
     stopRecording() {
       try {
-        this.recording = false;
-        this.playBack = true;
+        this.isDisPlay = false;
         this.media.stopRecord();
+        this.isRecording = false;
       }
       catch (e) {
         this.showToast('Could not stop recording.');
@@ -342,10 +356,9 @@ import { MediaPlugin } from 'ionic-native';
   
     startPlayBack() {
       try {
-        this.stopBack = true;
-        this.playBack = false;
-        this.eButton = true;
+        this.isDisRecord = true;
         this.media.play();
+        this.isPlaying = true;
       }
       catch (e) {
         this.showToast('Could not play recording.');
@@ -354,17 +367,48 @@ import { MediaPlugin } from 'ionic-native';
   
     stopPlayBack() {
       try {
-        this.stopBack = false;
-        this.playBack = true;
-        this.eButton = false;
+        this.isDisRecord = false;
         this.media.stop();
+        this.isPlaying = false;
       }
       catch (e) {
         this.showToast('Could not stop playing recording.');
       }
     } 
+    toggleRecord(){
+      this.isRecording = !this.isRecording;
+    }
+    togglePlay(){
+      this.isPlaying = !this.isPlaying;
+    }
+    doRecord()
+    {
+      if(!this.isRecording)
+      {
+        this.startRecording();
+        this.toggleRecord()
+      }
+      else{
+        this.stopRecording();
+        this.toggleRecord()
+      }
+    }
+  
+    doPlay()
+    {
+      if(!this.isPlaying)
+      {
+        this.startPlayBack();
+        this.togglePlay()
+      }
+      else{
+        this.stopPlayBack();
+        this.togglePlay()
+      }
+    }
 
 }
+
 
 class PatientModel {
   id: string;
