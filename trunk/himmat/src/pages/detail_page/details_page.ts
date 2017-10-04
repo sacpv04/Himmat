@@ -25,11 +25,12 @@ import { MediaPlugin } from 'ionic-native';
     private patients = []; 
     items:any = [];
     public signatureImage = false;
-    playBack = false;
-    recording = false;
     media: MediaPlugin;
-    stopBack = false;
-    eButton = false;
+    isRecording = false;
+    isPlaying = false;
+    isDisRecord = false;
+    isDisPlay = true;
+
     constructor(
       public nav: NavController, 
       params: NavParams, 
@@ -320,9 +321,9 @@ import { MediaPlugin } from 'ionic-native';
     // Function for Record and Play/Stop audio
     startRecording() {
       try {
-        this.recording = true;
-        this.playBack  = false;
+        this.isDisPlay = true;
         this.media.startRecord();
+        this.isRecording = true;
       }
       catch (e) {
         this.showToast('Could not start recording!');
@@ -331,9 +332,9 @@ import { MediaPlugin } from 'ionic-native';
   
     stopRecording() {
       try {
-        this.recording = false;
-        this.playBack = true;
+        this.isDisPlay = false;
         this.media.stopRecord();
+        this.isRecording = false;
       }
       catch (e) {
         this.showToast('Could not stop recording.');
@@ -342,10 +343,9 @@ import { MediaPlugin } from 'ionic-native';
   
     startPlayBack() {
       try {
-        this.stopBack = true;
-        this.playBack = false;
-        this.eButton = true;
+        this.isDisRecord = true;
         this.media.play();
+        this.isPlaying = true;
       }
       catch (e) {
         this.showToast('Could not play recording.');
@@ -354,17 +354,48 @@ import { MediaPlugin } from 'ionic-native';
   
     stopPlayBack() {
       try {
-        this.stopBack = false;
-        this.playBack = true;
-        this.eButton = false;
+        this.isDisRecord = false;
         this.media.stop();
+        this.isPlaying = false;
       }
       catch (e) {
         this.showToast('Could not stop playing recording.');
       }
     } 
+    toggleRecord(){
+      this.isRecording = !this.isRecording;
+    }
+    togglePlay(){
+      this.isPlaying = !this.isPlaying;
+    }
+    doRecord()
+    {
+      if(!this.isRecording)
+      {
+        this.startRecording();
+        this.toggleRecord()
+      }
+      else{
+        this.stopRecording();
+        this.toggleRecord()
+      }
+    }
+  
+    doPlay()
+    {
+      if(!this.isPlaying)
+      {
+        this.startPlayBack();
+        this.togglePlay()
+      }
+      else{
+        this.stopPlayBack();
+        this.togglePlay()
+      }
+    }
 
 }
+
 
 class PatientModel {
   id: string;
