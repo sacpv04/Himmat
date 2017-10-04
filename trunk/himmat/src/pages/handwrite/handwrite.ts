@@ -33,7 +33,7 @@ export class HandWrite {
     ) {
         this.patientId = this.navParams.data.item;
         console.log(this.patientId);
-        console.log("1:" + window.screen.width + "2:" + window.screen.height);
+        console.log("1:" + window.screen.width + "  -2:" + window.screen.height);
     }
  
    //Other Functions

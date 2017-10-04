@@ -13,7 +13,6 @@ import { Patient } from '../services/PatientApi';
 import { ToastController } from 'ionic-angular';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { ChangeDetectorRef } from '@angular/core';
-
 import { MediaPlugin } from 'ionic-native';
 
 @Component({
@@ -26,6 +25,9 @@ import { MediaPlugin } from 'ionic-native';
     private patients = []; 
     items:any = [];
     public signatureImage = false;
+    playBack = false;
+    recording = false;
+    media: MediaPlugin;
     constructor(
       public nav: NavController, 
       params: NavParams, 
@@ -71,6 +73,10 @@ import { MediaPlugin } from 'ionic-native';
       if (this.patient.id != undefined) {
         console.log("NAME: " + this.patient.id);
         this.nav.push(HandWrite, {item: this.patient.id});
+      } else {
+       // this.showToast("Please scan QR code");
+        this.nav.push(HandWrite, {item: this.patient.id});
+        
       }
     }
     scanQRCode() {
@@ -201,7 +207,7 @@ import { MediaPlugin } from 'ionic-native';
       //   }
       // });
   
-      this.media = new MediaPlugin('recording.wav');
+      //this.media = new MediaPlugin('recording.wav');
     }
 
     showToast(messageString: string) {
@@ -281,7 +287,7 @@ import { MediaPlugin } from 'ionic-native';
       catch (e) {
         this.showToast('Could not stop playing recording.');
       }
-    }
+    } 
 
 }
 
