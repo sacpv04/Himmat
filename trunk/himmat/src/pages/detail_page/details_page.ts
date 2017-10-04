@@ -28,12 +28,8 @@ import { MediaPlugin } from 'ionic-native';
     playBack = false;
     recording = false;
     media: MediaPlugin;
-<<<<<<< HEAD
-
-=======
     stopBack = false;
     eButton = false;
->>>>>>> 6dd5e4ff617f67e194b57b17aa3243f5c3c1531b
     constructor(
       public nav: NavController, 
       params: NavParams, 
