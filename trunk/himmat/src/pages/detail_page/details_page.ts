@@ -159,14 +159,14 @@ import { ChangeDetectorRef } from '@angular/core';
     }
 
     ionViewDidEnter() {
-      this.speechRecognition.hasPermission().then((hasPermission: boolean) => {
-        if (!hasPermission) {
-          this.speechRecognition.requestPermission().then(
-            () => console.log('Granted'),
-            () => this.showToast('Denied')
-          );
-        }
-      });
+      // this.speechRecognition.hasPermission().then((hasPermission: boolean) => {
+      //   if (!hasPermission) {
+      //     this.speechRecognition.requestPermission().then(
+      //       () => console.log('Granted'),
+      //       () => this.showToast('Denied')
+      //     );
+      //   }
+      // });
   
       //this.media = new MediaPlugin('recording.wav');
     }
