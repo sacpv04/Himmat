@@ -1,11 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams} from 'ionic-angular';
 import {SignaturePad} from 'angular2-signaturepad/signature-pad';
-import {HomePage} from '../home/home';
 import { Storage } from '@ionic/storage';
 import { Events } from 'ionic-angular';
-import { DetailsPage } from '../detail_page/details_page';
-import { Patient } from '../services/PatientApi';
 import {ElementRef} from '@angular/core';
 
 @Component({
@@ -20,8 +17,8 @@ export class HandWrite {
   canvas = '';
   public signaturePadOptions : Object = {
     'minWidth': 2,
-    'canvasWidth': 340,
-    'canvasHeight': 200,
+    'canvasWidth': window.screen.width,
+    'canvasHeight': window.screen.height,
     'backgroundColor': '#f6fbff',
     'penColor': '#666a73'
   };
@@ -36,6 +33,7 @@ export class HandWrite {
     ) {
         this.patientId = this.navParams.data.item;
         console.log(this.patientId);
+        console.log("1:" + window.screen.width + "2:" + window.screen.height);
     }
  
    //Other Functions
@@ -63,26 +61,27 @@ export class HandWrite {
   }
 
   drawCancel() {
-    this.navCtrl.push(HomePage);
-  }
-
-   drawComplete() {
-    /*this.signatureImage = this.signaturePad.toDataURL();
-    this.storage.set('image2', this.signature);
-    this.signaturePad.clear();
-    console.log("done");
-    this.navCtrl.push(HomePage, {signatureImage: this.signatureImage}); */
-
-    this.signature = this.signaturePad.toDataURL();
-    this.storage.set(this.patientId, this.signature);
-    this.signaturePad.clear();
-    this.events.publish('imageName', this.patientId);
-    console.log(this.patientId);
     this.navCtrl.pop();
   }
 
+   drawComplete() {
+    if (this.patientId == undefined) {
+      console.log("enter id");
+      this.navCtrl.pop();
+    } else {
+      this.signature = this.signaturePad.toDataURL();
+      this.storage.set(this.patientId, this.signature);
+      this.signaturePad.clear();
+      this.events.publish('imageName', this.patientId);
+      console.log(this.patientId);
+      this.navCtrl.pop();
+    }
+  
+  }
+
   drawClear() {
-    this.signaturePad.clear();
+    //this.signaturePad.clear();
+    this.storage.clear();
   }
   
   

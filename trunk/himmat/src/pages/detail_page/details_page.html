@@ -153,7 +153,7 @@
         <!-- <p style="border-bottom:1px solid rgba(0,0,0,.4); padding-bottom:10px">{{patient.quick_note}}</p> -->
     </ion-item>
     <ion-item>
-        <ion-label>Mental illness
+        <ion-label *ngIf="signatureImage">
             <img [src]="signature">
         </ion-label>
     </ion-item>

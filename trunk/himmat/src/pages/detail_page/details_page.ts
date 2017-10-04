@@ -25,11 +25,7 @@ import { MediaPlugin } from 'ionic-native';
     signature = '';
     private patients = []; 
     items:any = [];
-    public signatureImage : any;
-    playBack = false;
-    recording = false;
-    media: MediaPlugin;
-
+    public signatureImage = false;
     constructor(
       public nav: NavController, 
       params: NavParams, 
@@ -51,11 +47,14 @@ import { MediaPlugin } from 'ionic-native';
       console.log(this.patient);   
       this.events.subscribe("imageName", (imageName) => {
         this.storage.get(imageName).then((data) => {
-          this.signature = data;         
+          this.signature = data;
+          this.signatureImage = true;         
         });
       })
-      this.storage.get(this.patient.name).then((data) => {
-        this.signature = data;        
+      this.storage.get(this.patient.id).then((data) => {
+        console.log(this.patient.id);
+        this.signature = data;
+        this.signatureImage = true;        
       });
       // create data for scan code
       this.patientAPI.getPartients().then(res => {
@@ -69,9 +68,10 @@ import { MediaPlugin } from 'ionic-native';
       this.nav.push(QRCode);
     }
     goHandWrite() {
-      //console.log("ID: " + this.patient.id);
-      console.log("NAME: " + this.patient.name);
-      this.nav.push(HandWrite, {item: this.patient.name});
+      if (this.patient.id != undefined) {
+        console.log("NAME: " + this.patient.id);
+        this.nav.push(HandWrite, {item: this.patient.id});
+      }
     }
     scanQRCode() {
       this.barcodeScanner.scan().then((barcodeData) => {                
