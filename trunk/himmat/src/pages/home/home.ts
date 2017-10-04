@@ -12,7 +12,7 @@ export class HomePage {
   items: any = []; 
   private patients = [];
   constructor(public nav: NavController, public platform: Platform,
-    public actionsheetCtrl: ActionSheetController, private events: Events, private param: NavParams) {     
+    public actionsheetCtrl: ActionSheetController, private events: Events) {     
   } 
 
   ngOnInit() {
