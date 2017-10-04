@@ -10,14 +10,27 @@ import { Events } from 'ionic-angular';
 })
 export class HomePage {
   items: any = []; 
-  patients:any = [];
+  private patients = [];
   constructor(public nav: NavController, public platform: Platform,
-    public actionsheetCtrl: ActionSheetController, private events: Events) {
-  }
+    public actionsheetCtrl: ActionSheetController, private events: Events, private param: NavParams) {     
+  } 
 
   ngOnInit() {
     this.events.subscribe('users:created', (res) => {
-      this.patients.push(res);     
+      var is_exit = false;
+      if (this.patients.length === 0) {
+        this.patients.push(res);
+      } else {
+        for (var i = 0; i < this.patients.length; i ++) {
+          if (res.id === this.patients[i].id) {
+            is_exit = true;
+            break;
+          }
+        }
+        if (!is_exit) {
+          this.patients.push(res);
+        }
+      }    
     });      
   }
 

@@ -116,26 +116,8 @@ import { MediaPlugin } from 'ionic-native';
       alert.present();
     }
 
-    confirmCreate() {
-      const alert = this.alertCtrl.create({
-        title: 'Patient Saving',
-        message: 'New Patient is saving successful !',
-        buttons: [
-          {
-            text: 'Ok',
-            role: 'ok',
-            handler: () => {              
-              // this.nav.push(HomePage, {item: this.patient})
-              this.patient = new PatientModel();
-              this.patient.id = "";
-              this.patient.name = "";
-              this.patient.age = "";
-              this.patient.heathcareid = "";
-            }
-          }
-        ]
-      });
-      alert.present();
+    goBack() {
+      this.nav.pop();
     }
     
 
@@ -191,7 +173,7 @@ import { MediaPlugin } from 'ionic-native';
                 this.patient.color = "oxygen";
         }               
         this.events.publish('users:created', this.patient);
-        this.confirmCreate(); 
+        this.nav.first; 
       }
     }
 
