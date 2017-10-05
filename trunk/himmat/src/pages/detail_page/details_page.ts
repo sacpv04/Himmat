@@ -205,9 +205,7 @@ import { MediaPlugin } from 'ionic-native';
     }
 
     ionViewDidEnter() {
-      this.getPermissionSpeechRecognition();
-      this.media = new MediaPlugin('recording.wav');
-      
+      this.media = new MediaPlugin('recording.wav');      
     }
 
     getPermissionSpeechRecognition(){
