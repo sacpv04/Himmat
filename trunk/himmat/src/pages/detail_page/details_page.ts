@@ -80,13 +80,7 @@ import { MediaPlugin } from 'ionic-native';
       this.nav.push(QRCode);
     }
     goHandWrite() {
-      if (this.patient.id != undefined) {
-        console.log("NAME: " + this.patient.id);
-        this.nav.push(HandWrite, {item: this.patient.id});
-      } else {
-        this.showToast("Please scan QR code");
-        //this.nav.push(HandWrite, {item: this.patient.id});
-      }
+      this.nav.push(HandWrite, {item: this.patient.id});
     }
     scanQRCode() {
       this.barcodeScanner.scan().then((barcodeData) => {                

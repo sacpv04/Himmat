@@ -70,7 +70,8 @@ export class HandWrite {
       this.navCtrl.pop();
     } else {
       this.signature = this.signaturePad.toDataURL();
-      this.storage.set(this.patientId, this.signature);
+      let handWriteId = (this.patientId == undefined) ? "unknowId" : this.patientId;
+      this.storage.set(handWriteId, this.signature);
       this.signaturePad.clear();
       this.events.publish('imageName', this.signature);
       console.log(this.patientId);
