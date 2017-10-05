@@ -17,8 +17,8 @@ export class HandWrite {
   canvas = '';
   public signaturePadOptions : Object = {
     'minWidth': 2,
-    'canvasWidth': window.screen.width,
-    'canvasHeight': window.screen.height,
+    'canvasWidth': window.screen.width - 60,
+    'canvasHeight': window.screen.height - 150,
     'backgroundColor': '#f6fbff',
     'penColor': '#666a73'
   };
@@ -72,7 +72,7 @@ export class HandWrite {
       this.signature = this.signaturePad.toDataURL();
       this.storage.set(this.patientId, this.signature);
       this.signaturePad.clear();
-      this.events.publish('imageName', this.patientId);
+      this.events.publish('imageName', this.signature);
       console.log(this.patientId);
       this.navCtrl.pop();
     }
@@ -80,8 +80,8 @@ export class HandWrite {
   }
 
   drawClear() {
-    //this.signaturePad.clear();
-    this.storage.clear();
+    this.signaturePad.clear();
+    //this.storage.clear();
   }
   
   

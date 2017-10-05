@@ -160,11 +160,11 @@
     <ion-item>
         <ion-textarea [value]="patient.quick_note" rows=10 autosize></ion-textarea>
     </ion-item>
-    <ion-item>
-        <ion-label *ngIf="signatureImage">
-            <!-- <img [src]="signature"> -->
-            
-        </ion-label>
+    <ion-item *ngIf="showHandWrite">
+        <fieldset>
+            <legend>HandWrite:</legend>
+            <img [src]="signature">
+        </fieldset>
     </ion-item>
     <ion-item *ngIf="isShowPhoto">
         <fieldset>

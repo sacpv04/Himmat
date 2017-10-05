@@ -26,7 +26,7 @@ import { ChangeDetectorRef } from '@angular/core';
     isShowPhoto = false;
     private patients = []; 
     items:any = [];
-    public signatureImage = false;
+    public showHandWrite = false;
     //media: MediaPlugin;
     isRecording = false;
     isPlaying = false;
@@ -53,10 +53,8 @@ import { ChangeDetectorRef } from '@angular/core';
       } 
   
       this.events.subscribe("imageName", (imageName) => {
-        this.storage.get(imageName).then((data) => {
-          this.signature = data;
-          this.signatureImage = true;         
-        });
+        this.showHandWrite = true;  
+        this.signature = imageName;
       });
 
       // Load Photo
@@ -65,7 +63,7 @@ import { ChangeDetectorRef } from '@angular/core';
       this.storage.get(this.patient.id).then((data) => {
         console.log(this.patient.id);
         this.signature = data;
-        this.signatureImage = true;        
+        this.showHandWrite = true;        
       });
       // create data for scan code
       this.patientAPI.getPartients().then(res => {
