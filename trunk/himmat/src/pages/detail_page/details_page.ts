@@ -62,8 +62,11 @@ import { ChangeDetectorRef } from '@angular/core';
 
       this.storage.get(this.patient.id).then((data) => {
         console.log(this.patient.id);
-        this.signature = data;
-        this.showHandWrite = true;        
+        if(data != null) {
+          this.signature = data;
+          this.showHandWrite = true;        
+        }
+               
       });
       // create data for scan code
       this.patientAPI.getPartients().then(res => {
