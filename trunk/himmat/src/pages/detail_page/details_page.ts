@@ -13,7 +13,7 @@ import { Patient } from '../services/PatientApi';
 import { ToastController } from 'ionic-angular';
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
 import { ChangeDetectorRef } from '@angular/core';
-//import { MediaPlugin } from 'ionic-native';
+import { MediaPlugin } from 'ionic-native';
 
 @Component({
     selector: 'detail-page',
@@ -27,7 +27,7 @@ import { ChangeDetectorRef } from '@angular/core';
     private patients = []; 
     items:any = [];
     public showHandWrite = false;
-    //media: MediaPlugin;
+    media: MediaPlugin;
     isRecording = false;
     isPlaying = false;
     isDisableRecord = false;
@@ -211,8 +211,8 @@ import { ChangeDetectorRef } from '@angular/core';
     }
 
     ionViewDidEnter() {
-      //this.getPermissionSpeechRecognition();
-      //this.media = new MediaPlugin('recording.wav');
+      this.getPermissionSpeechRecognition();
+      this.media = new MediaPlugin('recording.wav');
       
     }
 
@@ -334,7 +334,7 @@ import { ChangeDetectorRef } from '@angular/core';
       try {
         this.isDisablePlay = true;
         this.toggleRecord()
-        //this.media.startRecord();
+        this.media.startRecord();
       }
       catch (e) {
         this.showToast('Could not start recording!');
@@ -345,7 +345,7 @@ import { ChangeDetectorRef } from '@angular/core';
       try {
         this.isDisablePlay = false;
         this.toggleRecord()
-        //this.media.stopRecord();
+        this.media.stopRecord();
       }
       catch (e) {
         this.showToast('Could not stop recording.');
@@ -356,7 +356,7 @@ import { ChangeDetectorRef } from '@angular/core';
       try {
         this.isDisableRecord = true;
         this.togglePlay()
-        //this.media.play();
+        this.media.play();
       }
       catch (e) {
         this.showToast('Could not play recording.');
@@ -367,8 +367,8 @@ import { ChangeDetectorRef } from '@angular/core';
       try {
         this.isDisableRecord = false;
         this.togglePlay()
-        // this.media.stop();
-        // this.media.release();
+        this.media.stop();
+        this.media.release();
       }
       catch (e) {
         this.showToast('Could not stop playing recording.');
