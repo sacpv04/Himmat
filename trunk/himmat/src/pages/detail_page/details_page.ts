@@ -26,7 +26,7 @@ import { MediaPlugin } from 'ionic-native';
     isShowPhoto = false;
     private patients = []; 
     items:any = [];
-    public showHandWrite = false;
+    showHandWrite = false;
     media: MediaPlugin;
     isRecording = false;
     isPlaying = false;
@@ -58,10 +58,10 @@ import { MediaPlugin } from 'ionic-native';
       });
 
       // Load Photo
-      this.loadPhotoCaptured();     
+      this.loadPhotoCaptured();   
 
       this.storage.get(this.patient.id).then((data) => {
-        console.log(this.patient.id);
+        console.log("aaaa"+this.patient.id);
         if(data != null) {
           this.signature = data;
           this.showHandWrite = true;        
@@ -112,7 +112,6 @@ import { MediaPlugin } from 'ionic-native';
           this.isShowPhoto = false;
       });   
     }
-
     getAge(date) {
       var now = new Date();
       var age = now.getFullYear() - date.getFullYear();

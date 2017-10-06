@@ -4,6 +4,7 @@ import {SignaturePad} from 'angular2-signaturepad/signature-pad';
 import { Storage } from '@ionic/storage';
 import { Events } from 'ionic-angular';
 import {ElementRef} from '@angular/core';
+import { DetailsPage } from '../detail_page/details_page';
 
 @Component({
   selector: 'page-signature',
@@ -17,8 +18,8 @@ export class HandWrite {
   canvas = '';
   public signaturePadOptions : Object = {
     'minWidth': 2,
-    'canvasWidth': window.screen.width - 60,
-    'canvasHeight': window.screen.height - 150,
+    'canvasWidth': window.screen.width,
+    'canvasHeight': window.screen.height,
     'backgroundColor': '#f6fbff',
     'penColor': '#666a73'
   };
@@ -70,12 +71,13 @@ export class HandWrite {
       this.navCtrl.pop();
     } else {
       this.signature = this.signaturePad.toDataURL();
-      let handWriteId = (this.patientId == undefined) ? "unknowId" : this.patientId;
+      let handWriteId = (this.patientId == undefined) ? "autoId" : this.patientId;
       this.storage.set(handWriteId, this.signature);
       this.signaturePad.clear();
       this.events.publish('imageName', this.signature);
-      console.log(this.patientId);
+      //console.log(this.patientId);
       this.navCtrl.pop();
+      //this.navCtrl.push(DetailsPage, {item: this.patientId});
     }
   
   }
