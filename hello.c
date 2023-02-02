@@ -3,6 +3,10 @@
 #include <stdint.h>
 
 int main(int argc, char *argv[]) {
-    printf("Hello, World...\n");
+    int i;
+    for(i; i < 10; i++){
+        printf("Hello, World... %d \n ", i);
+    }
+    
     return 0;
 }
