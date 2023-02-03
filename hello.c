@@ -5,7 +5,7 @@
 int main(int argc, char *argv[]) {
     int i;
     for(i; i < 10; i++){
-        printf("### Hello Renesas... %d \n ", i);
+        printf("### Hello SOAFEE... %d \n ", i);
     }
     
     return 0;
